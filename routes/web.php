@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAuth\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
@@ -12,12 +13,24 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
+//user login
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth');
 
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
+
+//admin login
+Route::get('/admin/login', [AdminLoginController::class, 'create']);
+Route::post('/admin/login', [AdminLoginController::class, 'store']);
+Route::post('/admin/logout', [AdminLoginController::class, 'destroy'])->middleware('auth:admin');
+
+Route::middleware('admin')->group(function() {
+    Route::get('/admin/dashboard', function() {
+        return Inertia::render('Admin/Dashboard');
+    })->name('admin.dashboard');
+});
 
 Route::get('/email/verify', function() {
     return Inertia::render('Auth/VerifyEmail');
