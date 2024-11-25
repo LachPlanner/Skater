@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -9,38 +9,38 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-class LoginController extends Controller
+class AdminLoginController extends Controller
 {
     public function create() {
-        if (Auth::guard('web')->check()) {
-            return redirect('/');
+        if (Auth::guard('admin')->check()) {
+            return redirect('/admin/dashboard');
         }
 
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Admin/AdminLogin');
     }
 
     public function store(Request $request): RedirectResponse {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required']
+            'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-    
-            return redirect('/');
+
+            return redirect('/admin/dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records'
+            'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
 
     public function destroy(Request $request): RedirectResponse {
-        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect('/login');
+        return redirect('admin/login');
     }
 }

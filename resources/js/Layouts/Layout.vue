@@ -19,7 +19,8 @@ const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen bg-white">
+    <!-- Navigation -->
     <nav class="flex justify-between items-center bg-black text-white py-6 border-b border-white/20">
       <div class="px-5">
         <Link href="/" class="font-bold italic">SkateCraft</Link>
@@ -47,9 +48,9 @@ const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
 
       <!-- Menuen til store skærme -->
       <div class="hidden md:flex px-5 space-x-5 font-bold">
-        <LinkButton href="#">Board</LinkButton>
-        <LinkButton href="#">Trunks</LinkButton>
-        <LinkButton href="#">Wheels</LinkButton>
+        <LinkButton href="/board">Board</LinkButton>
+        <LinkButton href="/trunks">Trunks</LinkButton>
+        <LinkButton href="/wheels">Wheels</LinkButton>
         <LinkButton href="#">Build your own board</LinkButton>
       </div>
 
@@ -84,10 +85,12 @@ const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
       >Logout</button>
     </div>
 
-    <!-- Hovedindholdet -->
-    <main class="bg-white text-black h-full overflow-hidden pt-14 pb-14">
-      <slot></slot>
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <slot />
     </main>
-    <Footer/>
+
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>

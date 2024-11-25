@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-
+import AdminLayout from '../../Layouts/AdminLayout.vue';
 </script>
 
 <template>
-    <div>
-        <h1>Hi There Admin</h1>
-    </div>
+    <AdminLayout>
+        
+    </AdminLayout>
 </template>
