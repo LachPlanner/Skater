@@ -12,7 +12,7 @@ let submit = () => {
 </script>
 
 <template>
-  <Layout>
+  <Layout :withPadding="true">
     <div class="flex flex-col justify-center items-center px-6 py-7 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img class="mx-auto h-20 w-auto" src="/public/images/logo.jpg" alt="Your Company">
