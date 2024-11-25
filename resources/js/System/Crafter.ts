@@ -1,28 +1,21 @@
 import { Engine } from './Engine';
-import { Camera } from './Camera';
-import { OrbitControls } from './OrbitControls';
-import { Loader } from './Loader';
 
 export class Crafter {
+  private static instance: Crafter | null = null;
   engine: Engine;
-  camera: Camera;
-  controls: OrbitControls;
-  loader: Loader;
 
-  constructor(container: HTMLElement) {
-    // Start engine
+  private constructor(container: HTMLElement) {
     this.engine = new Engine(container);
+    this.engine.start();
+  }
 
-    // Setup camera
-    this.camera = new Camera(this.engine.scene, this.engine.renderer.domElement);
-
-    // Setup controls
-    this.controls = new OrbitControls(this.camera.camera, this.engine.renderer.domElement);
-
-    // Setup loader
-    this.loader = new Loader(this.engine.scene);
-
-    // Start rendering loop
-    this.engine.start(this.camera.camera);
+  static getInstance(container: HTMLElement): Crafter {
+    if (!Crafter.instance) {
+      Crafter.instance = new Crafter(container);
+    } else {
+      Crafter.instance.engine.reset(container);
+    }
+    return Crafter.instance;
   }
 }
+
