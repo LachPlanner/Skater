@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ModuleMenu from '../../Components/ModuleMenu.vue'
 import { Crafter } from '@/System/Crafter';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const modules = [
   { name: 'Model1', image: 'https://via.placeholder.com/100' },
@@ -12,36 +12,24 @@ const modules = [
   { name: 'Model6', image: 'https://via.placeholder.com/100' },
 ];
 
+const configurator = ref();
+
 let crafter: Crafter;
 
-onMounted(async () => {
-  const container = document.getElementById('canvas') as HTMLElement;
+onMounted(() => {
+  crafter = new Crafter(configurator.value);
+  crafter.engine.initialize();
+  crafter.engine.loadModel('models/board.glb');
+  crafter.engine.render();
+})
 
-  if (container) {
-    crafter = Crafter.getInstance(container);
-
-    // Load model
-    try {
-      await new Promise<void>((resolve, reject) => {
-        crafter.engine.loadModel('/storage/models/board.glb', (model) => {
-          console.log('Model loaded:', model);
-          resolve();
-        });
-      });
-    } catch (error) {
-      console.error('Failed to load model:', error);
-    }
-  } else {
-    console.error('Container element not found.');
-  }
-});
 </script>
 
 <template>
   <Layout :withPadding="false">
     <div class="relative h-[calc(100vh-4.6rem)] bg-gray-100">
       <!-- Three.js Canvas -->
-      <canvas id="canvas" class="w-full h-full absolute inset-0"></canvas>
+      <div id="canvas" ref="configurator" class="w-full h-full absolute inset-0"></div>
   
       <!-- Menu -->
       <aside

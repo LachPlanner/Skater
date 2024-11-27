@@ -3,6 +3,8 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   Object3D,
+  AmbientLight,
+  DirectionalLight,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -11,106 +13,100 @@ export class Engine {
   scene: Scene;
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
-  controls: OrbitControls;
+  ambientLight: AmbientLight;
+  directionalLight: DirectionalLight;
+  orbitControls: OrbitControls;
   loader: GLTFLoader;
+  canvas: HTMLElement;
 
-  constructor(container: HTMLElement) {
-    if (!container) {
-      throw new Error('Container element is null. Ensure the DOM element is available.');
-    }
-
-    // Opret scene
+  constructor(canvas: HTMLElement) {
+    this.canvas = canvas;
     this.scene = new Scene();
+    this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new WebGLRenderer({ alpha: true });
+    this.ambientLight = new AmbientLight(0x333333, 0);
+    this.directionalLight = new DirectionalLight(0xffffff, 1);
 
-    // Opret renderer
-    this.renderer = new WebGLRenderer({ antialias: true });
-    this.renderer.setSize(container.offsetWidth, container.offsetHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(this.renderer.domElement);
-
-    // Opret kamera
-    this.camera = new PerspectiveCamera(
-      75,
-      container.offsetWidth / container.offsetHeight,
-      0.1,
-      1000
-    );
-    this.camera.position.set(0, 2, 5);
-    this.scene.add(this.camera);
-
-    // Opret kontroller
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableDamping = true;
-
-    // Opret loader
+    this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.orbitControls.enablePan = false;
     this.loader = new GLTFLoader();
-
-    // Tilføj resize-handler
-    window.addEventListener('resize', () => this.resize(container));
   }
 
-  // Start rendering loop
-  public start() {
-    const animate = () => {
-      requestAnimationFrame(animate);
-      this.controls.update(); // Opdater kontroller
-      this.renderer.render(this.scene, this.camera);
-    };
-    animate();
+  public initialize() {
+    //Set camera position
+    this.camera.position.set(0, 5, 10); 
+    this.camera.lookAt(0, 0, 0);
+
+    //Setup renderer
+    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+
+    console.log('Appending renderer DOM element:', this.renderer.domElement);
+    this.canvas.appendChild(this.renderer.domElement);
+
+    //Setup orbitControls
+    this.orbitControls.minDistance = 1.1;
+    this.orbitControls.maxDistance = 100.0;
+    this.orbitControls.minPolarAngle = 0;
+    this.orbitControls.maxPolarAngle = Math.PI / 2;
+
+    //Setup light
+    this.setupLight();
+
+    this.render();
+
+    window.addEventListener('resize', () => this.resize());
   }
 
   // Resize-handler
-  public resize(container: HTMLElement) {
-    this.renderer.setSize(this.element.offsetWidth, this.element.offsetHeight);
-    this.camera.aspect = this.element.offsetWidth / this.element.offsetHeight;
+  public resize() {
+    this.camera.aspect = this.canvas.offsetWidth / this.canvas.offsetHeight;
     this.camera.updateProjectionMatrix();
-  }
-
-  public reset(container: HTMLElement) {
-    // Clear the scene
-    this.scene.clear();
-
-    // Dispose of renderer resources
-    this.renderer.dispose();
-
-    // Clear controls and reinitialize them
-    this.controls.dispose();
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableDamping = true;
-
-    // Recreate the renderer and append it to the container
-    container.innerHTML = ''; // Remove the existing canvas
-    this.renderer = new WebGLRenderer({ antialias: true });
-    this.renderer.setSize(container.offsetWidth, container.offsetHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(this.renderer.domElement);
-
-    // Reset camera
-    this.camera.aspect = container.offsetWidth / container.offsetHeight;
-    this.camera.updateProjectionMatrix();
-    this.camera.position.set(0, 2, 5);
-
-    // Clear loader cache if necessary
-    this.loader = new GLTFLoader();
-  }
-
-  // Loader metode til at tilføje modeller
-  public loadModel(path: string, onLoad: (model: Object3D) => void) {
-    this.loader.load(
-      path,
-      (gltf) => {
-        const model = gltf.scene;
-        this.scene.add(model);
-        onLoad(model);
-      },
-      undefined,
-      (error) => {
-        console.error('An error occurred while loading the model:', error);
-      }
-    );
+    this.renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight);
+    this.render();
   }
 
   public get element(): HTMLElement {
     return this.renderer.domElement;
+  }
+
+  public render() {
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  public animate() {
+    requestAnimationFrame(() => this.animate());
+    this.renderer.render(this.scene, this.camera);
+    console.log('hi')
+  }
+
+  private setupLight() {
+    this.scene.add(this.ambientLight);
+    this.directionalLight.position.set(0, 10, 0);
+    this.scene.add(this.directionalLight);
+  }
+
+  public loadModel(path: string): Promise<Object3D> {
+    return new Promise((resolve, reject) => {
+      this.loader.load(
+        `/storage/${path}`,
+        (gltf) => {
+          const model = gltf.scene;
+      
+          // Justér skala og position, hvis nødvendigt
+          model.position.set(0, 0, 0); // Flyt til centrum af scenen
+          model.scale.set(1, 1, 1); // Skaler modellen til passende størrelse
+
+          this.scene.add(model);
+          this.render(); // Render scenen igen
+          resolve(model);
+        },
+        undefined,
+        (error) => {
+          console.error('Error loading model:', error);
+          reject(error);
+        }
+      );
+    });
   }
 }

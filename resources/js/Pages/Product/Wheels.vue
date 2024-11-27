@@ -1,5 +1,7 @@
-<script setup>
+<script lang="ts" setup>
 import ModuleMenu from '../../Components/ModuleMenu.vue'
+import { onMounted, ref } from 'vue';
+import { Crafter } from '@/System/Crafter';
 
 const modules = [
   { name: 'Model1', image: 'https://via.placeholder.com/100' },
@@ -9,13 +11,24 @@ const modules = [
   { name: 'Model5', image: 'https://via.placeholder.com/100' },
   { name: 'Model6', image: 'https://via.placeholder.com/100' },
 ];
+
+const configurator = ref();
+
+let crafter: Crafter;
+
+onMounted(() => {
+  crafter = new Crafter(configurator.value);
+  crafter.engine.initialize();
+  crafter.engine.loadModel('models/wheels.glb');
+  crafter.engine.render();
+});
 </script>
 
 <template>
     <Layout :withPadding="false">
       <div class="relative h-[calc(100vh-4.6rem)] bg-gray-100">
         <!-- Three.js Canvas -->
-        <canvas id="canvas" class="w-full h-full absolute inset-0"></canvas>
+        <div id="canvas" ref="configurator" class="w-full h-full absolute inset-0"></div>
   
         <!-- Menu -->
         <aside
