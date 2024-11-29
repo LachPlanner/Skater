@@ -41,7 +41,6 @@ export class Engine {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    console.log('Appending renderer DOM element:', this.renderer.domElement);
     this.canvas.appendChild(this.renderer.domElement);
 
     //Setup orbitControls
@@ -77,7 +76,6 @@ export class Engine {
   public animate() {
     requestAnimationFrame(() => this.animate());
     this.renderer.render(this.scene, this.camera);
-    console.log('hi')
   }
 
   private setupLight() {
@@ -93,7 +91,6 @@ export class Engine {
         (gltf) => {
           const model = gltf.scene;
       
-          // Justér skala og position, hvis nødvendigt
           model.position.set(0, 0, 0); // Flyt til centrum af scenen
           model.scale.set(1, 1, 1); // Skaler modellen til passende størrelse
 
