@@ -19,7 +19,7 @@ let crafter: Crafter;
 onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
-  crafter.engine.loadModel('models/trunks.glb');
+  crafter.engine.loadModel('trunks');
   crafter.engine.render();
 })
 </script>

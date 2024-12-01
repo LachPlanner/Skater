@@ -3,6 +3,7 @@ import ModuleMenu from '../../Components/ModuleMenu.vue'
 import { Crafter } from '@/System/Crafter';
 import { onMounted, ref } from 'vue';
 
+
 const modules = [
   { name: 'Model1', image: 'https://via.placeholder.com/100' },
   { name: 'Model2', image: 'https://via.placeholder.com/100' },
@@ -13,15 +14,16 @@ const modules = [
 ];
 
 const configurator = ref();
-
-let crafter: Crafter;
+let crafter: Crafter
 
 onMounted(() => {
-  crafter = new Crafter(configurator.value);
-  crafter.engine.initialize();
-  crafter.engine.loadModel('models/board.glb');
-  crafter.engine.render();
-})
+  if (configurator.value) {
+    crafter = new Crafter(configurator.value);
+    crafter.engine.initialize();
+    crafter.engine.loadModel('standingBoardWithVariants');
+    crafter.engine.animate();
+  }
+});
 
 </script>
 
