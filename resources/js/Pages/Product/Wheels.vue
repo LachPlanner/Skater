@@ -19,8 +19,8 @@ let crafter: Crafter;
 onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
-  crafter.engine.loadModel('wheels');
-  crafter.engine.render();
+  crafter.engine.loader.loadModel('wheels');
+  crafter.engine.animate();
 });
 </script>
 

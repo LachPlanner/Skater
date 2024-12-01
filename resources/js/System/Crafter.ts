@@ -1,4 +1,4 @@
-import { Engine } from './Engine';
+import { Engine } from '@/System/Engine';
 
 export class Crafter {
   engine: Engine;

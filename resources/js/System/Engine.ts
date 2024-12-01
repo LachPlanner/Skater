@@ -1,16 +1,14 @@
 import {
-  Scene,
-  WebGLRenderer,
-  PerspectiveCamera,
   Object3D,
-  AmbientLight,
-  DirectionalLight,
   TextureLoader,
-  MeshStandardMaterial,
-  Mesh
 } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import Scene from '@/System/Scene';
+import PerspectiveCamera from '@/System/PerspectiveCamera';
+import OrbitControls from '@/System/OrbitControls';
+import Loader from '@/System/Loader';
+import DirectionalLight from '@/System/Lighting/DirectionalLight';
+import AmbientLight from '@/System/Lighting/AmbientLight';
+import WebGLRenderer from '@/System/WebGLRenderer';
 
 export class Engine {
   scene: Scene;
@@ -19,7 +17,7 @@ export class Engine {
   ambientLight: AmbientLight;
   directionalLight: DirectionalLight;
   orbitControls: OrbitControls;
-  loader: GLTFLoader;
+  loader: Loader;
   canvas: HTMLElement;
   textureLoader: TextureLoader;
 
@@ -27,20 +25,20 @@ export class Engine {
     this.canvas = canvas;
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new WebGLRenderer({ alpha: true, antialias: true });
-    this.ambientLight = new AmbientLight(0x333333, 0);
-    this.directionalLight = new DirectionalLight(0xffffff, 1);
+    this.renderer = new WebGLRenderer(true, true);
+    this.ambientLight = new AmbientLight(this);
+    this.directionalLight = new DirectionalLight(this);
 
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.enablePan = false;
-    this.loader = new GLTFLoader();
+    this.loader = new Loader(this);
     this.textureLoader = new TextureLoader();
 
   }
 
   public initialize() {
     //Set camera position
-    this.camera.position.set(0, 2, 3); 
+    this.camera.position.set(0, 2, 4); 
     
     this.camera.setViewOffset(this.canvas.clientWidth, this.canvas.clientHeight, 158, 0, this.canvas.clientWidth, this.canvas.clientHeight )
 
@@ -56,9 +54,6 @@ export class Engine {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(0, 2, 0)
-
-    //Setup light
-    this.setupLight();
 
     this.render();
 
@@ -84,41 +79,6 @@ export class Engine {
   public animate(): void {
     requestAnimationFrame(() => this.animate());
     this.renderer.render(this.scene, this.camera);
-  }
-
-  private setupLight(): void {
-    this.scene.add(this.ambientLight);
-    this.directionalLight.position.set(0, 10, 10);
-    this.scene.add(this.directionalLight);
-  }
-
-  public async loadModel(path: string): Promise<Object3D> {
-    return new Promise((resolve, reject) => {
-        this.loader.load(
-            `/storage/models/${path}.glb`,
-            async (gltf) => {
-                const model = gltf.scene;
-
-                model.position.set(0, 0, 0);
-                model.scale.set(1, 1, 1);
-
-                model.userData = {
-                    identifier: path,
-                    loadedAt: new Date().toISOString(),
-                };
-
-                // Tilføj materialvariant og vent på, at den bliver tilføjet
-                this.scene.add(model);
-                this.render(); // Render scenen igen
-                resolve(model);
-            },
-            undefined,
-            (error) => {
-                console.error('Error loading model:', error);
-                reject(error);
-            }
-        );
-    });
   }
 
   public get objects(): Array<Object3D> {

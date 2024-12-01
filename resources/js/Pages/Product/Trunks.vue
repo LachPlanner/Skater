@@ -19,8 +19,8 @@ let crafter: Crafter;
 onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
-  crafter.engine.loadModel('trunks');
-  crafter.engine.render();
+  crafter.engine.loader.loadModel('trunks');
+  crafter.engine.animate();
 })
 </script>
 

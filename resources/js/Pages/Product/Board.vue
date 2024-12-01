@@ -20,7 +20,7 @@ onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
     crafter.engine.initialize();
-    crafter.engine.loadModel('standingBoardWithVariants');
+    crafter.engine.loader.loadModel('standingBoardWithVariants');
     crafter.engine.animate();
   }
 });
