@@ -19,7 +19,7 @@ let crafter: Crafter;
 onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
-  crafter.engine.loader.loadModel('trunks');
+  crafter.engine.loader.loadModel('TruckWithVariants');
   crafter.engine.animate();
 })
 </script>

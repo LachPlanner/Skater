@@ -54,6 +54,7 @@ export class Engine {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(0, 2, 0)
+    this.orbitControls.enableZoom = false;
 
     this.render();
 
