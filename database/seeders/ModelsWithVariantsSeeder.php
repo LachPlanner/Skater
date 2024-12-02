@@ -228,7 +228,7 @@ class ModelsWithVariantsSeeder extends Seeder
         // Create the Wheels model
         $wheels = Models::firstOrCreate([
             'model_name' => 'Wheels',
-            'uri' => 'wheels',
+            'uri' => 'WheelsWithVariants',
         ]);
 
         // Create variants for the Wheels model

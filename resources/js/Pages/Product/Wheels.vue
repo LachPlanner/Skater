@@ -19,7 +19,7 @@ let crafter: Crafter;
 onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
-  crafter.engine.loader.loadModel('wheels');
+  crafter.engine.loader.loadModel('WheelsWithVariants');
   crafter.engine.camera.updateCameraPosition(-1, -0.3, 1.5);
   crafter.engine.camera.updateCameraTarget(-1, -0.3, 0.3);
   crafter.engine.orbitControls.updateTarget(-1, -0.3, 0.3);
