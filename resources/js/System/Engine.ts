@@ -49,8 +49,8 @@ export class Engine {
     this.canvas.appendChild(this.renderer.domElement);
 
     //Setup orbitControls
-    this.orbitControls.minDistance = 1.1;
-    this.orbitControls.maxDistance = 100.0;
+    this.orbitControls.minDistance = 0.5; // Mindste zoom-afstand
+    this.orbitControls.maxDistance = 10.0;
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(0, 2, 0)

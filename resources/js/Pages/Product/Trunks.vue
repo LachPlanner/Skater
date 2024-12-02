@@ -1,29 +1,40 @@
 <script lang="ts"setup>
 import ModuleMenu from '../../Components/ModuleMenu.vue'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { Crafter } from '@/System/Crafter';
 
-const modules = [
-  { name: 'Model1', image: 'https://via.placeholder.com/100' },
-  { name: 'Model2', image: 'https://via.placeholder.com/100' },
-  { name: 'Model3', image: 'https://via.placeholder.com/100' },
-  { name: 'Model4', image: 'https://via.placeholder.com/100' },
-  { name: 'Model5', image: 'https://via.placeholder.com/100' },
-  { name: 'Model6', image: 'https://via.placeholder.com/100' },
-];
+const props = defineProps<{
+  model: {
+    uri: string;
+    variants: Array<{
+      variant_name: string;
+      variant_index: number;
+      image_path: string;
+    }>;
+  };
+}>();
+
+const modules = computed(() => {
+  return props.model.variants.map(variant => ({
+    name: variant.variant_name,
+    image: variant.image_path,
+  }));
+});
 
 const configurator = ref();
 
 let crafter: Crafter;
 
 onMounted(() => {
-  crafter = new Crafter(configurator.value);
-  crafter.engine.initialize();
-  crafter.engine.loader.loadModel('TruckWithVariants');
-  crafter.engine.camera.updateCameraPosition(0, -0.1, 0.8);
-  crafter.engine.camera.updateCameraTarget(-1, -0.1, 0);
-  crafter.engine.orbitControls.updateTarget(-1, -0.1, 0);
-  crafter.engine.animate();
+  if (configurator.value) {
+    crafter = new Crafter(configurator.value);
+    crafter.engine.initialize();
+    crafter.engine.loader.loadModel(props.model.uri);
+    crafter.engine.camera.updateCameraPosition(0, -0.1, 0.8);
+    crafter.engine.camera.updateCameraTarget(-1, -0.1, 0);
+    crafter.engine.orbitControls.updateTarget(-1, -0.1, 0);
+    crafter.engine.animate();
+  }
 })
 </script>
 
