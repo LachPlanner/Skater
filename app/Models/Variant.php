@@ -20,6 +20,6 @@ class Variant extends Model
 
     public function model()
     {
-        return $this->belongsTo(Model3D::class, 'model_id');
+        return $this->belongsTo(Models::class, 'model_id');
     }
 }
