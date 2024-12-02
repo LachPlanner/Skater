@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Models\Models;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,7 +52,10 @@ Route::middleware('admin')->group(function() {
 
 //Products
 Route::get('/board', function() {
-    return Inertia::render('Product/Board');
+    $model = Models::with('variants')->findOrFail(2); // Hent model med ID 2 og dens varianter
+    return Inertia::render('Product/Board', [
+        'model' => $model,
+    ]);
 });
 
 Route::get('/trunks', function() {
