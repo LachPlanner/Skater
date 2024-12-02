@@ -20,6 +20,9 @@ onMounted(() => {
   crafter = new Crafter(configurator.value);
   crafter.engine.initialize();
   crafter.engine.loader.loadModel('TruckWithVariants');
+  crafter.engine.camera.updateCameraPosition(0, -0.1, 0.8);
+  crafter.engine.camera.updateCameraTarget(-1, -0.1, 0);
+  crafter.engine.orbitControls.updateTarget(-1, -0.1, 0);
   crafter.engine.animate();
 })
 </script>
