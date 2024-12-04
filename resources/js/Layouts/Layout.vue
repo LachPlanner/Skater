@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import LinkButton from '../Components/LinkButton.vue';
 import Footer from './Footer.vue';
@@ -16,6 +16,14 @@ watch(() => page.props.auth.isLoggedIn, (newValue) => {
 });
 
 const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
+
+// Prop for at kontrollere padding på main
+defineProps({
+  withPadding: {
+    type: Boolean,
+    default: true,
+  },
+});
 </script>
 
 <template>
@@ -86,7 +94,7 @@ const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
     </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6">
+    <main :class="withPadding ? 'flex-1 p-6 flex items-center justify-center' : 'flex-1'">
       <slot />
     </main>
 
@@ -94,3 +102,4 @@ const isMenuOpen = ref(false); // Reaktivt state til dropdown-menu
     <Footer />
   </div>
 </template>
+

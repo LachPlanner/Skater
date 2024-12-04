@@ -25,6 +25,12 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
 
+// return match (true) {
+//     Auth::attempt($credentials) => regenerate, redirect til /,
+//     Auth::guard('admin')->attempt($credentials) => regenerate, redirect til admin,
+//     default => back with errors
+// }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
     
