@@ -27,6 +27,18 @@ export default class Loader extends GLTFLoader {
 
                     console.log(model);
 
+                    const parser = gltf.parser;
+                    const variantsExtension = gltf.userData.gltfExtensions?.['KHR_materials_variants'];
+
+                    if (variantsExtension) {
+                        const variants = variantsExtension.variants.map((variant: any) => variant.name);
+                        model.userData.variants = variants;
+                        model.userData.parser = parser;
+                        model.userData.variantsExtension = variantsExtension;
+
+                        console.log("Variants available:", variants);
+                    }
+
                     // Tilføj model til scenen via engine
                     this.engine.scene.add(model);
 
@@ -42,5 +54,40 @@ export default class Loader extends GLTFLoader {
                 }
             );
         });
+    }
+
+    public selectVariant(model: Object3D, variantName: string): void {
+        const { parser, variantsExtension } = model.userData;
+        if (!parser || !variantsExtension) {
+            console.warn("Model does not support material variants");
+            return;
+        }
+
+        const variantIndex = variantsExtension.variants.findIndex((v: any) => v.name === variantName);
+
+        model.traverse(async (object: any) => {
+            if (!object.isMesh || !object.userData.gltfExtensions) return;
+
+            const meshVariantDef = object.userData.gltfExtensions['KHR_materials_variants'];
+            if (!meshVariantDef) return;
+
+            if (!object.userData.originalMaterial) {
+                object.userData.originalMaterial = object.material;
+            }
+
+            const mapping = meshVariantDef.mappings.find((mapping: any) =>
+                mapping.variants.includes(variantIndex)
+            );
+
+            if (mapping) {
+                object.material = await parser.getDependency("material", mapping.material);
+                parser.assignFinalMaterial(object);
+            } else {
+                object.material = object.userData.originalMaterial;
+            }
+        });
+
+        // Render the scene again to apply changes
+        this.engine.render();
     }
 }

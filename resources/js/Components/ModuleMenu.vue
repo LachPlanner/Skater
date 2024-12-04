@@ -9,6 +9,11 @@ interface Module {
 defineProps<{
   modules: Module[]; // Liste af moduler
 }>();
+
+// Udsend en event ved klik på et modul
+const emit = defineEmits<{
+  (event: 'onSelect', moduleName: string): void;
+}>();
 </script>
 
 <template>
@@ -19,16 +24,19 @@ defineProps<{
       <div
         v-for="module in modules"
         :key="module.name"
-        class="flex flex-col items-center"
+        class="flex flex-col items-center cursor-pointer bg-gray-200 rounded-lg shadow hover:bg-gray-300 transition-colors"
+        style="width: 142.5px; height: 142.5px;"
+        @click="emit('onSelect', module.name)"
       >
         <img
           :src="module.image"
           :alt="module.name"
-          class="shadow"
+          class="w-full h-full object-cover rounded-lg"
         />
-        <span class="mt-2 text-sm font-medium">{{ module.name }}</span>
+        <span class=" text-sm font-medium">{{ module.name }}</span>
       </div>
     </div>
   </div>
 </template>
+
 
