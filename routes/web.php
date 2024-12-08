@@ -59,16 +59,19 @@ Route::get('/board', function() {
 });
 
 Route::get('/trunks', function() {
-    $model = Models::with('variants')->findOrFail(3);
+    $model = Models::with('variants')->findOrFail(4);
     return Inertia::render('Product/Trunks', [
         'model' => $model,
     ]);
 });
 
 Route::get('/wheels', function() {
-    $model = Models::with('variants')->findOrFail(4);
+    $model = Models::with('variants')->findOrFail(6);
     return Inertia::render('Product/Wheels', [
         'model' => $model,
     ]);
 });
 
+Route::get('/build', function() {
+    return Inertia::render('Product/BuildBoard');
+});

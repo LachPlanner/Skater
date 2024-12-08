@@ -73,7 +73,7 @@ let submit = () => {
           </div>
         </form>
 
-        <p class="mt-10 text-center text-sm text-gray-500">
+        <p class="mt-10 mb-10 text-center text-sm text-gray-500">
           Already have an Account?
           <Link href="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login</Link>
         </p>

@@ -13,7 +13,7 @@ class ModelsWithVariantsSeeder extends Seeder
         // Create the board model
         $board = Models::firstOrCreate([
             'model_name' => 'Skateboard',
-            'uri' => 'skateboard',
+            'uri' => 'LayingBoardWithVariants',
         ]);
 
         // Create variants for board model
@@ -225,10 +225,120 @@ class ModelsWithVariantsSeeder extends Seeder
             ],
         ]);
 
+        // Create the One Truck model
+        $oneTruck = Models::firstOrCreate([
+            'model_name' => 'One Truck',
+            'uri' => 'OneTruckWithVariants',
+        ]);
+
+        // Create variants for the Truck model
+        $oneTruck->variants()->createMany([
+            [
+                'variant_name' => 'Truck1',
+                'variant_index' => 0,
+                'image_path' => asset('images/trucks/truck1.png'),
+            ],
+            [
+                'variant_name' => 'Truck2',
+                'variant_index' => 1,
+                'image_path' => asset('images/trucks/truck2.png'),
+            ],
+            [
+                'variant_name' => 'Truck3',
+                'variant_index' => 2,
+                'image_path' => asset('images/trucks/truck3.png'),
+            ],
+            [
+                'variant_name' => 'Truck4',
+                'variant_index' => 3,
+                'image_path' => asset('images/trucks/truck4.png'),
+            ],
+            [
+                'variant_name' => 'Truck5',
+                'variant_index' => 4,
+                'image_path' => asset('images/trucks/truck5.png'),
+            ],
+            [
+                'variant_name' => 'Truck6',
+                'variant_index' => 5,
+                'image_path' => asset('images/trucks/truck6.png'),
+            ],
+            [
+                'variant_name' => 'Truck7',
+                'variant_index' => 6,
+                'image_path' => asset('images/trucks/truck7.png'),
+            ],
+        ]);
+
         // Create the Wheels model
         $wheels = Models::firstOrCreate([
             'model_name' => 'Wheels',
             'uri' => 'WheelsWithVariants',
+        ]);
+
+        // Create variants for the Wheels model
+        $wheels->variants()->createMany([
+            [
+                'variant_name' => 'Wheels1',
+                'variant_index' => 0,
+                'image_path' => asset('images/wheels/wheels1.png'),
+            ],
+            [
+                'variant_name' => 'Wheels2',
+                'variant_index' => 1,
+                'image_path' => asset('images/wheels/wheels2.png'),
+            ],
+            [
+                'variant_name' => 'Wheels3',
+                'variant_index' => 2,
+                'image_path' => asset('images/wheels/wheels3.png'),
+            ],
+            [
+                'variant_name' => 'Wheels4',
+                'variant_index' => 3,
+                'image_path' => asset('images/wheels/wheels4.png'),
+            ],
+            [
+                'variant_name' => 'Wheels5',
+                'variant_index' => 4,
+                'image_path' => asset('images/wheels/wheels5.png'),
+            ],
+            [
+                'variant_name' => 'Wheels6',
+                'variant_index' => 5,
+                'image_path' => asset('images/wheels/wheels6.png'),
+            ],
+            [
+                'variant_name' => 'Wheels7',
+                'variant_index' => 6,
+                'image_path' => asset('images/wheels/wheels7.png'),
+            ],
+            [
+                'variant_name' => 'Wheels8',
+                'variant_index' => 7,
+                'image_path' => asset('images/wheels/wheels8.png'),
+            ],
+            [
+                'variant_name' => 'Wheels9',
+                'variant_index' => 8,
+                'image_path' => asset('images/wheels/wheels9.png'),
+            ],
+            [
+                'variant_name' => 'Wheels10',
+                'variant_index' => 9,
+                'image_path' => asset('images/wheels/wheels10.png'),
+            ],
+            [
+                'variant_name' => 'Wheels11',
+                'variant_index' => 10,
+                'image_path' => asset('images/wheels/wheels11.png'),
+            ],
+        ]);
+
+        // Create the One Wheel model
+        $wheels = Models::firstOrCreate([
+            'model_name' => 'One Wheel',
+            'uri' => 'OneWheelWithVariants',
         ]);
 
         // Create variants for the Wheels model

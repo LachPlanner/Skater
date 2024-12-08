@@ -33,13 +33,12 @@ onMounted(() => {
       :style="{ backgroundImage: `url(${image})` }"
     ></div>
 
-    <!-- Button -->
-    <button
-      @click="nextSlide"
+    <Link
+      href="/build"
       class="absolute bottom-6 left-6 bg-white text-black py-2 px-4 rounded-md shadow-lg hover:bg-gray-200"
     >
       Go Build Your Own Board
-    </button>
+    </Link>
   </div>
 </template>
 
