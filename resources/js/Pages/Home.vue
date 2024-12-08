@@ -4,8 +4,8 @@ import Carousel from '@/Components/Carousel.vue';
 </script>
 
 <template>
-  <Layout>
-    <div class="flex flex-col min-h-screen">
+  <Layout :withPadding="false">
+    <div class="flex flex-col min-h-screen pb-6">
       
       <div class="w-full h-full max-h-[700px] mb-6">
         <Carousel />
