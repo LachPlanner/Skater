@@ -47,11 +47,13 @@ const currentModules = computed(() => {
 // Emit event ved modulvalg
 const emit = defineEmits<{
   (event: 'onSelect', moduleName: string, modelUri: string): void;
+  (event: 'onTabChange', tabName: string): void;
 }>();
 
 // Skift tab
 const switchTab = (tab: string) => {
   activeTab.value = tab;
+  emit('onTabChange', tab);
 };
 
 // Klik på modul

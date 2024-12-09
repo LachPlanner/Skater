@@ -1,10 +1,9 @@
-import { PerspectiveCamera as ThreeJsCamera } from "three";
+import { PerspectiveCamera as ThreeJsCamera, Vector3 } from "three";
+
 
 export default class PerspectiveCamera extends ThreeJsCamera {
-
     constructor(fov?: number, aspect?: number, near?: number, far?: number) {
         super(fov, aspect, near, far);
-
     }
 
     public updateCameraPosition(x: number, y: number, z: number): void {
@@ -12,6 +11,6 @@ export default class PerspectiveCamera extends ThreeJsCamera {
     }
 
     public updateCameraTarget(x: number, y: number, z: number) {
-    this.lookAt(x, y, z);
+        this.lookAt(x, y, z);
     }
 }

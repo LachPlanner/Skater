@@ -78,7 +78,7 @@ export class Engine {
         break;
 
       case 4:
-        this.camera.position.set(0, -5, 0);
+        this.camera.position.set(0, -4, 0);
         this.camera.rotation.set(Math.PI, 0, 0);
         this.camera.lookAt(0, 0, 0);
         this.orbitControls.minDistance = 0.5; // Mindste zoom-afstand
