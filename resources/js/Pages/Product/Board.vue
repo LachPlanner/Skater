@@ -27,12 +27,8 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize();
-
-    // Load the model with the identifier
-    crafter.engine.loader.loadModel(props.model.uri).then((model) => {
-      console.log("Model loaded:", model);
-    });
+    crafter.engine.initialize(1);
+    crafter.engine.loader.loadModel(props.model.uri);
 
     crafter.engine.animate();
   }
@@ -46,9 +42,7 @@ const changeVariant = (variantName: string) => {
   if (object) {
     // Change the variant using the loader's selectVariant method
     crafter.engine.loader.selectVariant(object, variantName);
-    console.log(`Variant "${variantName}" applied to model.`);
   } else {
-    console.warn(`Model with identifier "${props.model.uri}" not found.`);
   }
 };
 </script>

@@ -1,25 +1,19 @@
-<script lang="ts" setup>
-import ModuleMenu from '../../Components/ModuleMenu.vue'
+<script setup lang="ts">
+import TabMenu from '@/Components/TabMenu.vue';
 import { Crafter } from '@/System/Crafter';
-import { onMounted, ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const props = defineProps<{
-  model: {
+  models: Array<{
+    id: number;
     uri: string;
     variants: Array<{
       variant_name: string;
       variant_index: number;
       image_path: string;
     }>;
-  };
+  }>;
 }>();
-
-const modules = computed(() => {
-  return props.model.variants.map(variant => ({
-    name: variant.variant_name,
-    image: variant.image_path,
-  }));
-});
 
 const configurator = ref();
 let crafter: Crafter;
@@ -27,45 +21,42 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize();
-    crafter.engine.loader.loadModel("LayingBoardWithVariants");
-    crafter.engine.loader.loadModel("TruckWithVariants");
-    crafter.engine.loader.loadModel("WheelsWithVariants");
-
-    // Load the model with the identifier
-    // crafter.engine.loader.loadModel(props.model.uri).then((model) => {
-    //   console.log("Model loaded:", model);
-    // });
-
+    crafter.engine.initialize(4);
+    props.models.forEach(model => {
+      crafter.engine.loader.loadModel(model.uri);
+    });
     crafter.engine.animate();
   }
 });
 
-// Function to handle variant change
-const changeVariant = (variantName: string) => {
-  // Use the model identifier to find the object
-  const object = crafter.engine.getObjectByIdentifier(props.model.uri);
-  
-  if (object) {
-    // Change the variant using the loader's selectVariant method
+const changeVariant = (variantName: string, modelUri: string) => {
+  console.log(`Selected module: ${variantName}, Model URI: ${modelUri}`);
+  const object = crafter.engine.getObjectByIdentifier(modelUri);
+  if(object) {
     crafter.engine.loader.selectVariant(object, variantName);
-    console.log(`Variant "${variantName}" applied to model.`);
-  } else {
-    console.warn(`Model with identifier "${props.model.uri}" not found.`);
   }
 };
 </script>
+
 
 <template>
   <Layout :withPadding="false">
     <div class="relative h-[calc(100vh-4.6rem)] bg-gray-100">
       <!-- Three.js Canvas -->
       <div id="canvas" ref="configurator" class="w-full h-full absolute inset-0"></div>
-  
-      
+
+      <aside
+        class="absolute top-4 right-4 w-[366px] h-[calc(100%-2rem)] bg-white p-6 border border-gray-300 overflow-y-auto shadow-lg"
+      >
+        <TabMenu
+          :models="props.models"
+          @onSelect="changeVariant"
+        />
+      </aside>
     </div>
   </Layout>
 </template>
+
 
   
   

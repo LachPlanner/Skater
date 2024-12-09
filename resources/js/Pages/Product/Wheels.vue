@@ -28,12 +28,8 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize();
+    crafter.engine.initialize(3);
     crafter.engine.loader.loadModel(props.model.uri);
-    crafter.engine.camera.updateCameraPosition(-1, -0.3, 1);
-    crafter.engine.camera.updateCameraTarget(-1, -0.3, 0.3);
-    crafter.engine.orbitControls.updateTarget(-1, -0.3, 0.3);
-    crafter.engine.orbitControls.updateAzimuthAngle(45 * (Math.PI / 180));
     crafter.engine.animate();
   }
 });

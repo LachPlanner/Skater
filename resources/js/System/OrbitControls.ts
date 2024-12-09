@@ -16,5 +16,11 @@ export default class OrbitControls extends ThreeJsOrbitControls {
         this.minAzimuthAngle = - angle;
     }
 
-    
+    public updateMaxPolarAngle(angle: number) {
+        this.maxPolarAngle = angle;
+    }
+
+    public updateMinPolarAngle(angle:number) {
+        this.minPolarAngle = angle;
+    }    
 }

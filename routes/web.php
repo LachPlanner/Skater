@@ -7,8 +7,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\Models;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
-
 
 Route::get('/', function () {
     return Inertia::render('Home');
@@ -73,5 +71,11 @@ Route::get('/wheels', function() {
 });
 
 Route::get('/build', function() {
-    return Inertia::render('Product/BuildBoard');
+    // Hent modellerne med ID 1, 3 og 5 og deres varianter
+    $models = Models::with('variants')->whereIn('id', [1, 3, 5])->get();
+
+    // Returner til Inertia med alle modellerne og deres varianter
+    return Inertia::render('Product/BuildBoard', [
+        'models' => $models,
+    ]);
 });
