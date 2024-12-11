@@ -16,6 +16,7 @@ class Variant extends Model
         'variant_name',
         'variant_index',
         'image_path',
+        'price',
     ];
 
     public function model()

@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { Vector3 } from 'three';
 import TabMenu from '@/Components/TabMenu.vue';
 import { Crafter } from '@/System/Crafter';
 import { ref, onMounted } from 'vue';
+import { Variants } from '@/System/Entities';
 
 const props = defineProps<{
   models: Array<{
     id: number;
     uri: string;
-    variants: Array<{
-      variant_name: string;
-      variant_index: number;
-      image_path: string;
-    }>;
+    variants: Array<Variants>;
   }>;
 }>();
 
@@ -51,29 +47,24 @@ const updateCameraForTab = (tab: string) => {
       crafter.engine.camera.lookAt(-1, -0.3, 0.3);
       crafter.engine.orbitControls.target.set(-1, -0.3, 0.3);
       break;
-
-    default:
-      console.warn(`Unknown tab: ${tab}`);
-      break;
   }
-    crafter.engine.orbitControls.update();
+  crafter.engine.orbitControls.update();
 };
 
 // Håndter tab skift event
 const handleTabChange = (tab: string) => {
-  console.log(`Active tab changed to: ${tab}`);
   updateCameraForTab(tab);
 };
 
+// Håndter variantvalg
 const changeVariant = (variantName: string, modelUri: string) => {
   console.log(`Selected module: ${variantName}, Model URI: ${modelUri}`);
   const object = crafter.engine.getObjectByIdentifier(modelUri);
-  if(object) {
+  if (object) {
     crafter.engine.loader.selectVariant(object, variantName);
   }
 };
 </script>
-
 
 <template>
   <Layout :withPadding="false">
@@ -86,13 +77,14 @@ const changeVariant = (variantName: string, modelUri: string) => {
       >
         <TabMenu
           :models="props.models"
-          @onSelect="changeVariant"
+          @onSelect="(moduleName, modelUri) => changeVariant(moduleName, modelUri)"
           @onTabChange="handleTabChange"
         />
       </aside>
     </div>
   </Layout>
 </template>
+
 
 
   

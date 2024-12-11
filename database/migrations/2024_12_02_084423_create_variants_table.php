@@ -14,6 +14,7 @@ class CreateVariantsTable extends Migration
             $table->string('variant_name');
             $table->text('variant_index');
             $table->string('image_path');
+            $table->integer('price');
             $table->timestamps();
         });
     }

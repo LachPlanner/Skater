@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
 // Definér typen for et modul
 interface Module {
@@ -47,25 +47,13 @@ const emit = defineEmits<{
     </div>
 
     <!-- Faste knapper nederst -->
-    <div v-if="auth" class="flex justify-between items-center p-4 bg-white">
-      <button
+    <div class="flex justify-center items-center p-4 bg-white">
+      <Link
+        href="/build"
         class="px-4 py-2 bg-black text-white rounded-md hover:bg-white hover:text-black transition border"
       >
-        Add to Cart
-      </button>
-      <button
-        class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition"
-      >
-        Save & Share
-      </button>
-    </div>
-    <div v-if="!auth" class="flex justify-between items-center p-4 bg-white">
-      <div class="">Login to purchase</div>
-      <button
-        class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition"
-      >
-        Save & Share
-      </button>
+        Go build your Board
+      </Link>
     </div>
   </div>
 </template>
