@@ -56,10 +56,11 @@ defineProps({
 
       <!-- Menuen til store skærme -->
       <div class="hidden md:flex px-5 space-x-5 font-bold">
+        <LinkButton href="/shop">Shop</LinkButton>
         <LinkButton href="/board">Board</LinkButton>
         <LinkButton href="/trunks">Trunks</LinkButton>
         <LinkButton href="/wheels">Wheels</LinkButton>
-        <LinkButton href="#">Build your own board</LinkButton>
+        <LinkButton href="/build">Build your own board</LinkButton>
       </div>
 
       <!-- Brugermenu -->

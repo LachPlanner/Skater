@@ -3,7 +3,8 @@ import '../css/app.css'
 
 import { createApp, h } from 'vue'
 import { Link, createInertiaApp } from '@inertiajs/vue3'
-import Layout from './Layouts/Layout.vue'
+import { createPinia } from 'pinia';
+import Layout from './Layouts/Layout.vue';
 
 createInertiaApp({
   resolve: name => {
@@ -11,7 +12,12 @@ createInertiaApp({
     return pages[`./Pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
+    const app = createApp({ render: () => h(App, props) })
+
+    const pinia = createPinia();
+
+    app
+    .use(pinia)
       .component('Layout', Layout)
       .component('Link', Link)
       .use(plugin)

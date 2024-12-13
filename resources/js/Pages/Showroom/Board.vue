@@ -22,17 +22,29 @@ const modules = computed(() => {
 });
 
 const configurator = ref();
-let crafter: Crafter
+let crafter: Crafter;
 
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize();
+    crafter.engine.initialize(1);
     crafter.engine.loader.loadModel(props.model.uri);
+
     crafter.engine.animate();
   }
 });
 
+// Function to handle variant change
+const changeVariant = (variantName: string) => {
+  // Use the model identifier to find the object
+  const object = crafter.engine.getObjectByIdentifier(props.model.uri);
+  
+  if (object) {
+    // Change the variant using the loader's selectVariant method
+    crafter.engine.loader.selectVariant(object, variantName);
+  } else {
+  }
+};
 </script>
 
 <template>
@@ -45,11 +57,15 @@ onMounted(() => {
       <aside
         class="absolute top-4 right-4 w-[366px] h-[calc(100%-2rem)] bg-white p-6 border border-gray-300 overflow-y-auto shadow-lg"
       >
-        <!-- Content Section -->
-        <ModuleMenu :modules="modules"></ModuleMenu>
+        <!-- Module Menu -->
+        <ModuleMenu
+          :modules="modules"
+          @onSelect="changeVariant"
+        ></ModuleMenu>
       </aside>
     </div>
   </Layout>
 </template>
+
   
   
