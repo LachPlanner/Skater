@@ -10,4 +10,17 @@ export default class OrbitControls extends ThreeJsOrbitControls {
     public updateTarget(x: number, y: number, z: number) {
         this.target.set(x, y, z); 
     }
+
+    public updateAzimuthAngle(angle: number): void {
+        this.maxAzimuthAngle = angle;
+        this.minAzimuthAngle = - angle;
+    }
+
+    public updateMaxPolarAngle(angle: number) {
+        this.maxPolarAngle = angle;
+    }
+
+    public updateMinPolarAngle(angle:number) {
+        this.minPolarAngle = angle;
+    }    
 }

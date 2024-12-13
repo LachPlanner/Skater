@@ -6,9 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\Models;
+use App\Models\Variant;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
-
 
 Route::get('/', function () {
     return Inertia::render('Home');
@@ -53,22 +52,36 @@ Route::middleware('admin')->group(function() {
 //Products
 Route::get('/board', function() {
     $model = Models::with('variants')->findOrFail(2); // Hent model med ID 2 og dens varianter
-    return Inertia::render('Product/Board', [
+    return Inertia::render('Showroom/Board', [
         'model' => $model,
     ]);
 });
 
 Route::get('/trunks', function() {
-    $model = Models::with('variants')->findOrFail(3);
-    return Inertia::render('Product/Trunks', [
+    $model = Models::with('variants')->findOrFail(4);
+    return Inertia::render('Showroom/Trunks', [
         'model' => $model,
     ]);
 });
 
 Route::get('/wheels', function() {
-    $model = Models::with('variants')->findOrFail(4);
-    return Inertia::render('Product/Wheels', [
+    $model = Models::with('variants')->findOrFail(6);
+    return Inertia::render('Showroom/Wheels', [
         'model' => $model,
     ]);
 });
 
+Route::get('/build', function() {
+    $models = Models::with('variants')->whereIn('id', [1, 3, 5])->get();
+    return Inertia::render('Showroom/BuildBoard', [
+        'models' => $models,
+    ]);
+});
+
+Route::get('/shop', function() {
+    $variants = Variant::whereIn('model_id', [1, 3, 5])->get();
+
+    return Inertia::render('Products/ProductList', [
+        'variants' => $variants,
+    ]);
+});
