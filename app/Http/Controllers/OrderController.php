@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -16,15 +18,29 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        // Hent brugerens ordrer med deres items og produkter
-        $orders = Order::with('items.product')
-            ->where('user_id', $user->id)
-            ->orderBy('order_date', 'desc')
-            ->get();
+        if(!$user) {
+            return redirect('login');
+        }
 
-        return inertia('Orders/OrderList', [
+        // Hent brugerens ordrer med deres items og produkter
+        $orders = Order::with(['items.product.variant'])->where('user_id', Auth::id())->get();
+
+        return Inertia::render('User/OrderHistory', [
             'orders' => $orders,
         ]);
+    }
+
+    public function adminIndex()
+    {
+        // Kontroller om brugeren er admin
+        if (Auth::guard('admin')->check()) {
+            // Hent alle ordrer med deres items og produkter
+            $orders = Order::with('items.product.variant')->orderBy('order_date', 'desc')->get();
+
+            return inertia('Admin/Orders', [
+                'orders' => $orders,
+            ]);
+        }
     }
 
     /**
@@ -33,6 +49,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+
+        if(!$user) {
+            return redirect('login');
+        }
 
         // Validering af input
         $validatedData = $request->validate([
@@ -43,14 +63,12 @@ class OrderController extends Controller
             'postal_code' => 'required|string|max:10',
         ]);
 
-        // Hent eller opret brugerens cart
-        $cart = $user->cart()->firstOrCreate([]);
+        // Hent brugerens eksisterende cart
+        $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();
 
-        // Load relaterede items og produkter
-        $cart->load('items.product');
-
-        if ($cart->items->isEmpty()) {
-            return response()->json(['error' => 'Cart is empty'], 400);
+        // Tjek, om kurven eksisterer og har items
+        if (!$cart || $cart->items->isEmpty()) {
+            return response()->json(['error' => 'Your cart is empty'], 400);
         }
 
         // Beregn totalbeløbet
@@ -79,7 +97,7 @@ class OrderController extends Controller
         $cart->items()->delete();
         $cart->delete();
 
-        return response()->json(['message' => 'Order completed successfully'], 200);
+        return redirect()->route('cart.index')->with('success', 'Order completed successfully');
     }
 }
 

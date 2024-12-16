@@ -71,7 +71,7 @@ defineProps({
 
       <div v-if="auth" class="hidden md:flex px-5">
         <LinkButton :href="'/cart'">Cart</LinkButton>
-        <LinkButton href="#">Profile</LinkButton>
+        <LinkButton href="/profile">Profile</LinkButton>
         <button 
           class="inline-flex items-center px-2 py-2 bg-black border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150"
           @click="handleLogout"
@@ -89,7 +89,7 @@ defineProps({
       <LinkButton v-if="!auth" href="/register">Register</LinkButton>
       <LinkButton v-if="!auth" href="/login">Login</LinkButton>
       <LinkButton v-if="auth" href="/cart">Cart</LinkButton>
-      <LinkButton v-if="auth" href="#">Profile</LinkButton>
+      <LinkButton v-if="auth" href="/profile">Profile</LinkButton>
       <button 
         v-if="auth"
         class="inline-flex items-center px-2 py-2 bg-black border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150"

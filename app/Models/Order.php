@@ -17,6 +17,11 @@ class Order extends Model
         'order_date',
     ];
 
+    protected $casts = [
+        'total_amount' => 'float',
+        'order_date' => 'datetime',
+    ];
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);

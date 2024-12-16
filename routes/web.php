@@ -7,7 +7,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Models;
+use App\Models\Order;
 use App\Models\Variant;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -48,7 +51,15 @@ Route::middleware('admin')->group(function() {
     Route::get('/admin/dashboard', function() {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
-
+    
+    //Orders
+    Route::get('/admin/orders', [OrderController::class, 'adminIndex'])->name('admin.orders');
+    
+    //Products
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products');
+    Route::post('/admin/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
+    
+    //Logout
     Route::post('/admin/logout', [AdminLoginController::class, 'destroy'])->middleware('auth:admin');
 });
 
@@ -83,7 +94,7 @@ Route::get('/build', function() {
 
 //Product list
 Route::get('/shop', function() {
-    $variants = Variant::with('product') // Hent relaterede produkter
+    $variants = Variant::with('product')
         ->whereIn('model_id', [1, 3, 5])
         ->get();
 
@@ -102,4 +113,7 @@ Route::middleware('auth')->group(function() {
     //Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+    //Profile
+    Route::get('/profile', [UserController::class, 'show']);
 });

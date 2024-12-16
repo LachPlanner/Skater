@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -72,7 +73,6 @@ class CartController extends Controller
 
         // Returner den opdaterede kurv
         $cartItems = $cart->items()->with('product')->get();
-        return response()->json(['message' => 'Product added to cart', 'cart' => $cartItems]);
     }
 
     // Fjern et produkt fra kurven

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 import { CartItem, CartProps } from '@/System/Entities';
 import { removeFromCart } from '@/Api/cart';
 import LinkButton from '@/Components/LinkButton.vue';
@@ -14,19 +15,43 @@ const props = defineProps<CartProps>();
 const cartItems = ref<CartItem[]>(props.cartItems);
 const totalPrice = ref<number>(props.totalPrice);
 
+// Brug useForm til shipping og ordreoprettelse
+const form = useForm({
+  first_name: '',
+  last_name: '',
+  address: '',
+  city: '',
+  postal_code: '',
+});
+
 // Fjern et produkt fra kurven
 const handleRemoveFromCart = async (productId: number) => {
-    try {
-        const updatedCart = await removeFromCart(productId);
-        cartItems.value = cartItems.value.filter(item => item.product_id !== productId);
-        totalPrice.value = updatedCart.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-        );
-        toast.success('Succesfully removed item from cart')
-    } catch (error) {
-        toast.error('Could not remove item. Please try again.');
-    }
+  try {
+    const updatedCart = await removeFromCart(productId);
+    cartItems.value = cartItems.value.filter(item => item.product_id !== productId);
+    totalPrice.value = updatedCart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    toast.success('Successfully removed item from cart');
+  } catch (error) {
+    toast.error('Could not remove item. Please try again.');
+  }
+};
+
+// Opret en ordre
+const handleCreateOrder = () => {
+  form.post('/orders', {
+    onSuccess: () => {
+      toast.success('Order created successfully');
+      cartItems.value = []; // Tøm kurven lokalt efter succesfuld oprettelse
+      totalPrice.value = 0;
+      form.reset(); // Ryd formularen
+    },
+    onError: (errors) => {
+      toast.error('Failed to create order. Please check your input.');
+    },
+  });
 };
 </script>
 
@@ -35,7 +60,6 @@ const handleRemoveFromCart = async (productId: number) => {
     <div class="container mx-auto p-6 h-auto">
       <h1 class="text-3xl font-bold text-center mb-8">Your Shopping Cart</h1>
 
-      <!-- Responsiv grid layout -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white p-6">
         <!-- Venstre sektion: Cart Items -->
         <div>
@@ -73,8 +97,6 @@ const handleRemoveFromCart = async (productId: number) => {
               Go to Shop
             </LinkButton>
           </div>
-
-          <!-- Totalpris -->
           <div v-if="cartItems.length" class="mt-6 pt-4 border-t border-gray-300">
             <h3 class="text-lg font-medium text-center">Total: {{ totalPrice }} DKK</h3>
           </div>
@@ -83,61 +105,62 @@ const handleRemoveFromCart = async (productId: number) => {
         <!-- Højre sektion: Shipping Information -->
         <div>
           <h2 class="text-xl font-semibold mb-4 text-center">Shipping Information</h2>
-          <form class="space-y-4">
+          <form class="space-y-4" @submit.prevent="handleCreateOrder">
             <div>
               <label for="firstName" class="block text-sm font-medium">First Name</label>
               <input
                 id="firstName"
+                v-model="form.first_name"
                 type="text"
                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
+              <p v-if="form.errors.first_name" class="text-red-500 text-xs mt-1">{{ form.errors.first_name }}</p>
             </div>
             <div>
               <label for="lastName" class="block text-sm font-medium">Last Name</label>
               <input
                 id="lastName"
+                v-model="form.last_name"
                 type="text"
                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
+              <p v-if="form.errors.last_name" class="text-red-500 text-xs mt-1">{{ form.errors.last_name }}</p>
             </div>
             <div>
               <label for="address" class="block text-sm font-medium">Address</label>
               <input
                 id="address"
+                v-model="form.address"
                 type="text"
                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
+              <p v-if="form.errors.address" class="text-red-500 text-xs mt-1">{{ form.errors.address }}</p>
             </div>
             <div>
               <label for="city" class="block text-sm font-medium">City</label>
               <input
                 id="city"
+                v-model="form.city"
                 type="text"
                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
+              <p v-if="form.errors.city" class="text-red-500 text-xs mt-1">{{ form.errors.city }}</p>
             </div>
             <div>
               <label for="zip" class="block text-sm font-medium">Postal Code</label>
               <input
                 id="zip"
+                v-model="form.postal_code"
                 type="text"
                 class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               />
+              <p v-if="form.errors.postal_code" class="text-red-500 text-xs mt-1">{{ form.errors.postal_code }}</p>
             </div>
             <button
-              v-if="cartItems.length"
               type="submit"
               class="w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
             >
               Complete Order
-            </button>
-            <button
-              v-else
-              type="submit"
-              class="w-full px-4 py-2 bg-gray-200 text-white rounded"
-              disabled="true"
-            >
-            Complete Order
             </button>
           </form>
         </div>
@@ -145,6 +168,8 @@ const handleRemoveFromCart = async (productId: number) => {
     </div>
   </Layout>
 </template>
+
+
 
   
 
