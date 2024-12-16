@@ -70,6 +70,7 @@ defineProps({
       </div>
 
       <div v-if="auth" class="hidden md:flex px-5">
+        <LinkButton :href="'/cart'">Cart</LinkButton>
         <LinkButton href="#">Profile</LinkButton>
         <button 
           class="inline-flex items-center px-2 py-2 bg-black border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150"
@@ -80,13 +81,15 @@ defineProps({
 
     <!-- Dropdown-menu til små skærme -->
     <div v-if="isMenuOpen" class="md:hidden bg-black text-white px-5 py-4 flex flex-col space-y-4">
+      <LinkButton href="/shop">Shop</LinkButton>
       <LinkButton href="/board">Board</LinkButton>
       <LinkButton href="/trucks">Trunks</LinkButton>
       <LinkButton href="/wheels">Wheels</LinkButton>
       <LinkButton href="/build">Build your own board</LinkButton>
       <LinkButton v-if="!auth" href="/register">Register</LinkButton>
       <LinkButton v-if="!auth" href="/login">Login</LinkButton>
-      <LinkButton v-if="auth" href="/logout">Profile</LinkButton>
+      <LinkButton v-if="auth" href="/cart">Cart</LinkButton>
+      <LinkButton v-if="auth" href="#">Profile</LinkButton>
       <button 
         v-if="auth"
         class="inline-flex items-center px-2 py-2 bg-black border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-black active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150"

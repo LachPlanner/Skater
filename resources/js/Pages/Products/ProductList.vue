@@ -4,6 +4,9 @@ import { Variants } from '@/System/Entities';
 import { usePage } from '@inertiajs/vue3';
 import LinkButton from '@/Components/LinkButton.vue';
 import { addToCart } from '@/Api/Cart';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 // Props for varianter
 const props = defineProps<{
@@ -65,10 +68,9 @@ const closePopup = () => {
 const handleAddToCart = async (productId: number) => {
   try {
     await addToCart(productId, 1);
-    alert('Product added to cart successfully!');
+    toast.success('Product added to cart successfully!');
   } catch (error) {
-    console.error('Failed to add product to cart:', error);
-    alert('Failed to add product to cart. Please try again.');
+    toast.error('Failed to add product to cart. Please try again.');
   }
 };
 </script>

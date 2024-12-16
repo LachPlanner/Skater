@@ -38,14 +38,19 @@ export const removeFromCart = async (productId: number) => {
     }
 };
 
-// Ryd hele kurven
-export const clearCart = async () => {
+export const createOrder = async (orderDetails: {
+    first_name: string;
+    last_name: string;
+    address: string;
+    city: string;
+    postal_code: string;
+}) => {
     try {
-        const response = await axios.post('/cart/clear');
-        return response.data.message; // Returner en succesbesked
-    } catch (error) {
-        console.error('Error clearing cart:', error.response?.data?.message || error.message);
-        throw error;
+        const response = await axios.post('/orders', orderDetails);
+        return response.data;
+    } catch (error: any) {
+        console.error('Error creating order:', error.response?.data?.message || error.message);
+        throw error.response?.data || error.message;
     }
 };
 

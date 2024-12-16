@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Models\Models;
 use App\Models\Variant;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -91,10 +92,14 @@ Route::get('/shop', function() {
     ]);
 });
 
-//Cart 
 Route::middleware('auth')->group(function() {
+    //Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+    //Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 });
