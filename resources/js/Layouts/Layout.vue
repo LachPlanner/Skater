@@ -8,7 +8,7 @@ function handleLogout() {
   router.post('/logout');
 }
 
-const page = usePage();
+const page = usePage<{ auth: { isLoggedIn: boolean } }>();
 const auth = computed(() => page.props.auth.isLoggedIn);
 
 watch(() => page.props.auth.isLoggedIn, (newValue) => {
@@ -58,7 +58,7 @@ defineProps({
       <div class="hidden md:flex px-5 space-x-5 font-bold">
         <LinkButton href="/shop">Shop</LinkButton>
         <LinkButton href="/board">Board</LinkButton>
-        <LinkButton href="/trunks">Trunks</LinkButton>
+        <LinkButton href="/trucks">Trucks</LinkButton>
         <LinkButton href="/wheels">Wheels</LinkButton>
         <LinkButton href="/build">Build your own board</LinkButton>
       </div>
@@ -80,10 +80,10 @@ defineProps({
 
     <!-- Dropdown-menu til små skærme -->
     <div v-if="isMenuOpen" class="md:hidden bg-black text-white px-5 py-4 flex flex-col space-y-4">
-      <LinkButton href="#">Board</LinkButton>
-      <LinkButton href="#">Trunks</LinkButton>
-      <LinkButton href="#">Wheels</LinkButton>
-      <LinkButton href="#">Build your own board</LinkButton>
+      <LinkButton href="/board">Board</LinkButton>
+      <LinkButton href="/trucks">Trunks</LinkButton>
+      <LinkButton href="/wheels">Wheels</LinkButton>
+      <LinkButton href="/build">Build your own board</LinkButton>
       <LinkButton v-if="!auth" href="/register">Register</LinkButton>
       <LinkButton v-if="!auth" href="/login">Login</LinkButton>
       <LinkButton v-if="auth" href="/logout">Profile</LinkButton>

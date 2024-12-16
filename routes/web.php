@@ -18,6 +18,7 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth');
 
+//user register
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
 
@@ -49,7 +50,7 @@ Route::middleware('admin')->group(function() {
     Route::post('/admin/logout', [AdminLoginController::class, 'destroy'])->middleware('auth:admin');
 });
 
-//Products
+//showrooms
 Route::get('/board', function() {
     $model = Models::with('variants')->findOrFail(2); // Hent model med ID 2 og dens varianter
     return Inertia::render('Showroom/Board', [
@@ -57,9 +58,9 @@ Route::get('/board', function() {
     ]);
 });
 
-Route::get('/trunks', function() {
+Route::get('/trucks', function() {
     $model = Models::with('variants')->findOrFail(4);
-    return Inertia::render('Showroom/Trunks', [
+    return Inertia::render('Showroom/Trucks', [
         'model' => $model,
     ]);
 });
@@ -78,8 +79,11 @@ Route::get('/build', function() {
     ]);
 });
 
+//Product list
 Route::get('/shop', function() {
-    $variants = Variant::whereIn('model_id', [1, 3, 5])->get();
+    $variants = Variant::with('product') // Hent relaterede produkter
+        ->whereIn('model_id', [1, 3, 5])
+        ->get();
 
     return Inertia::render('Products/ProductList', [
         'variants' => $variants,

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useCartStore } from '@/Stores/cart';
+import { ref, computed, watch } from 'vue';
 import { Variants } from '@/System/Entities';
+import { usePage } from '@inertiajs/vue3';
+import LinkButton from '@/Components/LinkButton.vue';
 
 // Props for varianter
 const props = defineProps<{
@@ -10,6 +11,13 @@ const props = defineProps<{
 
 // Aktive tab
 const activeTab = ref('Board');
+
+const page = usePage<{ auth: { isLoggedIn: boolean } }>();
+const auth = computed(() => page.props.auth.isLoggedIn);
+
+watch(() => page.props.auth.isLoggedIn, (newValue) => {
+  auth.value = newValue;
+});
 
 // Map model_id til tabs
 const modelMap = {
@@ -37,9 +45,6 @@ const filteredVariants = computed(() => {
   );
 });
 
-// Kurv store
-const cartStore = useCartStore();
-
 // Popup State
 const showPopup = ref(false);
 const selectedVariant = ref<Variants | null>(null);
@@ -54,13 +59,6 @@ const openPopup = (variant: Variants) => {
 const closePopup = () => {
   showPopup.value = false;
   selectedVariant.value = null;
-};
-
-// Tilføj til kurv
-const addToCart = (variant: Variants) => {
-  cartStore.addToCart({ ...variant, quantity: 1 });
-  closePopup();
-  console.log('Added to cart:', variant);
 };
 </script>
 
@@ -97,26 +95,39 @@ const addToCart = (variant: Variants) => {
         
             <!-- Variants Display -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div
+              <div
                 v-for="variant in filteredVariants"
                 :key="variant.id"
                 class="p-2 bg-white border border-gray-200 shadow-sm rounded cursor-pointer"
-                @click="openPopup(variant)"
-                >
+              >
                 <img
-                    :src="variant.image_path"
-                    :alt="variant.variant_name"
-                    class="w-full h-32 object-cover rounded mb-2"
+                  :src="variant.image_path"
+                  :alt="variant.variant_name"
+                  @click="openPopup(variant)"
+                  class="w-full h-32 object-cover rounded mb-2"
                 />
                 <h2 class="text-sm font-medium mb-1">{{ variant.variant_name }}</h2>
-                <p class="text-sm text-gray-600 mb-2">{{ variant.price }} DKK</p>
-                <button
-                    class="w-full px-3 py-2 bg-black text-white rounded hover:bg-gray-800"
-                    @click="addToCart(selectedVariant)"
-                >
+                <p class="text-sm text-gray-600 mb-4">
+                  {{ variant.product.price || 'Price not available' }} DKK
+                </p>
+
+                <!-- Knapper centreret -->
+                <div class="flex justify-center items-center">
+                  <button
+                    v-if="auth"
+                    class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+                  >
                     Add to Cart
-                </button>
+                  </button>
+                  <LinkButton
+                    v-else
+                    :href="'/login'"
+                    class="px-4 py-2"
+                  >
+                    Login To Purchase
+                  </LinkButton>
                 </div>
+              </div>
             </div>
         
             <!-- Popup -->
@@ -137,13 +148,14 @@ const addToCart = (variant: Variants) => {
                     class="w-full h-40 object-cover rounded mb-4"
                 />
                 <h2 class="text-xl font-bold">{{ selectedVariant.variant_name }}</h2>
-                <p class="text-gray-600 mb-4">{{ selectedVariant.price }} DKK</p>
+                <p class="text-gray-600 mb-4">{{ selectedVariant.product.price }} DKK</p>
                 <button
+                    v-if="auth"
                     class="w-full px-3 py-2 bg-black text-white rounded hover:bg-gray-800"
-                    @click="addToCart(selectedVariant)"
                 >
                     Add to Cart
                 </button>
+                <LinkButton v-else :href="'/login'">Login To Purchase</LinkButton>
                 </div>
             </div>
         </div>

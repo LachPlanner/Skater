@@ -13,10 +13,10 @@ import Carousel from '@/Components/Carousel.vue';
     
       <div class="flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BoxInformation href="/editor" title="Editors Bay" description="Click here if you wanna try the 3D environment on my website"></BoxInformation>
-          <BoxInformation href="https://threejs.org/docs/" title="Three Js" description="Click here if you wanna learn more about Three Js in their documentation."></BoxInformation>
-          <BoxInformation href="https://vuejs.org/guide/introduction.html" title="Vue" description="Click here if you wanna learn more about Vue in their documentation."></BoxInformation>
-          <BoxInformation href="https://laravel.com/docs/11.x/readme" title="Laravel" description="Click here if you wanna learn more about Laravel in their documentation."></BoxInformation>
+          <BoxInformation href="/Shop" title="Shop" description="Check out the shop and see what we have to offer"></BoxInformation>
+          <BoxInformation href="/board" title="Board" description="Check out the boards in 3D space"></BoxInformation>
+          <BoxInformation href="/trucks" title="Trucks" description="Check out the trucks in a 3D space"></BoxInformation>
+          <BoxInformation href="/wheels" title="Wheels" description="Check out the wheels in a 3D space"></BoxInformation>
         </div>
       </div>
     </div>
