@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue';
 import { Variants } from '@/System/Entities';
 import { usePage } from '@inertiajs/vue3';
 import LinkButton from '@/Components/LinkButton.vue';
+import { addToCart } from '@/Api/Cart';
 
 // Props for varianter
 const props = defineProps<{
@@ -60,6 +61,16 @@ const closePopup = () => {
   showPopup.value = false;
   selectedVariant.value = null;
 };
+
+const handleAddToCart = async (productId: number) => {
+  try {
+    await addToCart(productId, 1);
+    alert('Product added to cart successfully!');
+  } catch (error) {
+    console.error('Failed to add product to cart:', error);
+    alert('Failed to add product to cart. Please try again.');
+  }
+};
 </script>
 
 <template>
@@ -115,6 +126,7 @@ const closePopup = () => {
                 <div class="flex justify-center items-center">
                   <button
                     v-if="auth"
+                    @click="handleAddToCart(variant.product.id)"
                     class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
                   >
                     Add to Cart
@@ -151,6 +163,7 @@ const closePopup = () => {
                 <p class="text-gray-600 mb-4">{{ selectedVariant.product.price }} DKK</p>
                 <button
                     v-if="auth"
+                    @click="handleAddToCart(selectedVariant.product.id)"
                     class="w-full px-3 py-2 bg-black text-white rounded hover:bg-gray-800"
                 >
                     Add to Cart

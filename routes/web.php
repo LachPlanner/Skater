@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Models\Models;
 use App\Models\Variant;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -52,7 +53,7 @@ Route::middleware('admin')->group(function() {
 
 //showrooms
 Route::get('/board', function() {
-    $model = Models::with('variants')->findOrFail(2); // Hent model med ID 2 og dens varianter
+    $model = Models::with('variants')->findOrFail(2);
     return Inertia::render('Showroom/Board', [
         'model' => $model,
     ]);
@@ -88,4 +89,12 @@ Route::get('/shop', function() {
     return Inertia::render('Products/ProductList', [
         'variants' => $variants,
     ]);
+});
+
+//Cart 
+Route::middleware('auth')->group(function() {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
