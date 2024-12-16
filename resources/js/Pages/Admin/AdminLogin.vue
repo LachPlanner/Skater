@@ -14,7 +14,9 @@ let submit = () => {
 <template>
     <div class="flex flex-col justify-center items-center px-6 py-7 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img class="mx-auto h-20 w-auto" src="/public/images/logo.jpg" alt="Your Company">
+        <h1 class="text-3xl font-bold italic text-gray-900 text-center">
+          SkateCraft
+        </h1>
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Admin login</h2>
       </div>
 
