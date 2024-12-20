@@ -52,6 +52,9 @@ export interface OrderItem {
 
   export interface Order {
     id: number;
+    address: string;
+    city: string;
+    postal_code: string;
     order_date: string;
     total_amount: number;
     items: Array<OrderItem>;

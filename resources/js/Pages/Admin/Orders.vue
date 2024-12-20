@@ -37,6 +37,10 @@ const toggleOrder = (orderId: number) => {
                             <p class="text-gray-600">
                                 Date: {{ new Date(order.order_date).toLocaleDateString() }}
                             </p>
+                            <!-- Address Information -->
+                            <p class="text-gray-600">
+                                Address: {{ order.address }}, {{ order.city }} {{ order.postal_code }}
+                            </p>
                         </div>
                         <h2 class="text-lg font-semibold">Total: {{ order.total_amount }} DKK</h2>
                     </div>
