@@ -18,7 +18,7 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize(4);
+    crafter.engine.sceneSetup.initialize(4);
     props.models.forEach(model => {
       crafter.engine.loader.loadModel(model.uri);
     });
@@ -58,7 +58,6 @@ const handleTabChange = (tab: string) => {
 
 // Håndter variantvalg
 const changeVariant = (variantName: string, modelUri: string) => {
-  console.log(`Selected module: ${variantName}, Model URI: ${modelUri}`);
   const object = crafter.engine.getObjectByIdentifier(modelUri);
   if (object) {
     crafter.engine.loader.selectVariant(object, variantName);

@@ -28,20 +28,17 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize(2);
+    crafter.engine.sceneSetup.initialize(2);
     crafter.engine.loader.loadModel(props.model.uri);
     crafter.engine.animate();
   }
 })
 
 const changeVariant = (variantName: string) => {
-  // Use the model identifier to find the object
   const object = crafter.engine.getObjectByIdentifier(props.model.uri);
   
   if (object) {
-    // Change the variant using the loader's selectVariant method
     crafter.engine.loader.selectVariant(object, variantName);
-    console.log(`Variant "${variantName}" applied to model.`);
   } else {
     console.warn(`Model with identifier "${props.model.uri}" not found.`);
   }

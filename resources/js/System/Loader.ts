@@ -1,5 +1,5 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Object3D } from "three";
+import { Object3D, AnimationClip } from "three";
 import { Engine } from "@/System/Engine";
 
 export default class Loader extends GLTFLoader {
@@ -10,42 +10,40 @@ export default class Loader extends GLTFLoader {
         this.engine = engine; // Gem en reference til Engine
     }
 
-    public async loadModel(path: string): Promise<Object3D> {
+    public async loadModel(path: string): Promise<{ model: Object3D; animations: AnimationClip[] }> {
         return new Promise((resolve, reject) => {
             this.load(
                 `/storage/models/${path}.glb`,
                 (gltf) => {
                     const model = gltf.scene;
-
+                    const animations = gltf.animations; // Få fat i animationerne
+    
                     model.position.set(0, 0, 0);
                     model.scale.set(1, 1, 1);
-
+    
                     model.userData = {
                         identifier: path,
+                        animations, // Gem animationerne her
                         loadedAt: new Date().toISOString(),
                     };
-
-                    console.log(model);
-
+    
                     const parser = gltf.parser;
                     const variantsExtension = gltf.userData.gltfExtensions?.['KHR_materials_variants'];
-
+    
                     if (variantsExtension) {
                         const variants = variantsExtension.variants.map((variant: any) => variant.name);
                         model.userData.variants = variants;
                         model.userData.parser = parser;
                         model.userData.variantsExtension = variantsExtension;
-
-                        console.log("Variants available:", variants);
                     }
-
+    
                     // Tilføj model til scenen via engine
                     this.engine.scene.add(model);
-
+    
                     // Render scenen igen via engine
                     this.engine.render();
-
-                    resolve(model);
+    
+                    resolve({ model, animations });
                 },
                 undefined,
                 (error) => {
@@ -54,7 +52,7 @@ export default class Loader extends GLTFLoader {
                 }
             );
         });
-    }
+    }    
 
     public selectVariant(model: Object3D, variantName: string): void {
         const { parser, variantsExtension } = model.userData;

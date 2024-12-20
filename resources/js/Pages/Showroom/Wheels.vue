@@ -2,6 +2,7 @@
 import ModuleMenu from '../../Components/ModuleMenu.vue'
 import { onMounted, ref, computed } from 'vue';
 import { Crafter } from '@/System/Crafter';
+import { LoopOnce, AnimationClip } from 'three';
 
 const props = defineProps<{
   model: {
@@ -28,22 +29,42 @@ let crafter: Crafter;
 onMounted(() => {
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.initialize(3);
-    crafter.engine.loader.loadModel(props.model.uri);
+    crafter.engine.sceneSetup.initialize(3);
+    crafter.engine.loader.loadModel(props.model.uri).then(({ model, animations }) => {
+      crafter.engine.scene.add(model);
+
+      // Tilføj mixeren, hvis der er animationer
+      if (animations.length > 0) {
+        crafter.engine.animation.addAnimation(model); // Tilføj animation-mixeren
+      }
+    });
     crafter.engine.animate();
   }
 });
 
 const changeVariant = (variantName: string) => {
-  // Use the model identifier to find the object
   const object = crafter.engine.getObjectByIdentifier(props.model.uri);
-  
+  crafter.engine.camera.position.set(-1, -0.3, 1);
+  crafter.engine.orbitControls.target.set(-1, -0.3, 0.3);
+  crafter.engine.camera.lookAt(-1, -0.3, 0.3)
+
   if (object) {
-    // Change the variant using the loader's selectVariant method
-    crafter.engine.loader.selectVariant(object, variantName);
-    console.log(`Variant "${variantName}" applied to model.`);
+    const mixer = crafter.engine.animation.getMixer(object);
+
+    if (mixer) {
+      const animations = object.userData.animations as AnimationClip[];
+      const action = mixer.clipAction(animations[0]);
+
+      action.reset().play();
+      action.clampWhenFinished = true;
+      action.loop = LoopOnce;
+
+      setTimeout(() => {
+        crafter.engine.loader.selectVariant(object, variantName);
+      }, 500);
+    } 
   } else {
-    console.warn(`Model with identifier "${props.model.uri}" not found.`);
+    console.warn('Model not found for variant change:', props.model.uri);
   }
 };
 </script>
