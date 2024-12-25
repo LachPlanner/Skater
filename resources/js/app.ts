@@ -5,6 +5,8 @@ import { createApp, h } from 'vue'
 import { Link, createInertiaApp } from '@inertiajs/vue3'
 import { createPinia } from 'pinia';
 import Layout from './Layouts/Layout.vue';
+import Toast, { POSITION } from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 
 createInertiaApp({
   resolve: name => {
@@ -21,6 +23,12 @@ createInertiaApp({
       .component('Layout', Layout)
       .component('Link', Link)
       .use(plugin)
+      .use(Toast, {
+        position: POSITION.TOP_RIGHT, 
+        timeout: 2000, 
+        pauseOnHover: true,
+        draggable: true,
+      })
       .mount(el)
   },
 })

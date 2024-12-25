@@ -16,11 +16,15 @@ class Variant extends Model
         'variant_name',
         'variant_index',
         'image_path',
-        'price',
     ];
 
     public function model()
     {
         return $this->belongsTo(Models::class, 'model_id');
+    }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class);
     }
 }
