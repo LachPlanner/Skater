@@ -20,13 +20,6 @@ export class SceneSetup {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.canvas.appendChild(this.renderer.domElement);
-    this.camera.setViewOffset(
-      this.canvas.clientWidth,
-      this.canvas.clientHeight,
-      158, 0,
-      this.canvas.clientWidth,
-      this.canvas.clientHeight
-    );
 
     // Scene configuration based on sceneConfig
     switch (sceneConfig) {
@@ -81,7 +74,7 @@ export class SceneSetup {
   }
 
   private setupScene4(): void {
-    this.camera.position.set(0, -3, 0);
+    this.camera.position.set(0, -4, 0);
     this.camera.rotation.set(Math.PI, 0, 0);
     this.camera.lookAt(0, 0, 0);
     this.orbitControls.minDistance = 0.5;
