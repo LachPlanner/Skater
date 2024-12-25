@@ -1,8 +1,7 @@
-<script lang="ts" setup>
+<script lang="ts"setup>
 import ModuleMenu from '../../Components/ModuleMenu.vue'
 import { onMounted, ref, computed, onUnmounted } from 'vue';
 import { Crafter } from '@/System/Crafter';
-import { LoopOnce, AnimationClip } from 'three';
 
 const props = defineProps<{
   model: {
@@ -35,14 +34,9 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   if (configurator.value) {
     crafter = new Crafter(configurator.value);
-    crafter.engine.sceneSetup.initialize(3);
-    crafter.engine.loader.loadModel(props.model.uri).then(({ model, animations }) => {
-      crafter.engine.scene.add(model);
+    crafter.engine.sceneSetup.initialize(2);
+    crafter.engine.loader.loadModel(props.model.uri);
 
-      if (animations.length > 0) {
-        crafter.engine.animation.addAnimation(model);
-      }
-    });
     if(windowWidth.value > 640) {
       crafter.engine.camera.setViewOffset(
       crafter.engine.canvas.clientWidth,
@@ -52,6 +46,7 @@ onMounted(() => {
       crafter.engine.canvas.clientHeight
     );
     }
+
     crafter.engine.animate();
   }
 });
@@ -62,27 +57,11 @@ onUnmounted(() => {
 
 const changeVariant = (variantName: string) => {
   const object = crafter.engine.getObjectByIdentifier(props.model.uri);
-  crafter.engine.camera.position.set(-1, -0.3, 1);
-  crafter.engine.orbitControls.target.set(-1, -0.3, 0.3);
-  crafter.engine.camera.lookAt(-1, -0.3, 0.3)
-
+  
   if (object) {
-    const mixer = crafter.engine.animation.getMixer(object);
-
-    if (mixer) {
-      const animations = object.userData.animations as AnimationClip[];
-      const action = mixer.clipAction(animations[0]);
-
-      action.reset().play();
-      action.clampWhenFinished = true;
-      action.loop = LoopOnce;
-
-      setTimeout(() => {
-        crafter.engine.loader.selectVariant(object, variantName);
-      }, 500);
-    } 
+    crafter.engine.loader.selectVariant(object, variantName);
   } else {
-    console.warn('Model not found for variant change:', props.model.uri);
+    console.warn(`Model with identifier "${props.model.uri}" not found.`);
   }
 };
 </script>

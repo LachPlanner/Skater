@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { router } from '@inertiajs/vue3';
 import LinkButton from '../Components/LinkButton.vue';
 
 // Menu Items
 const menuItems = [
-  { name: 'Dashboard', link: '/admin/models' },
+  { name: 'Dashboard', link: '/admin/products' },
   { name: 'Orders', link: '/admin/orders' },
 ];
 

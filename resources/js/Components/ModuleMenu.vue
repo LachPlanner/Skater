@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed, watch } from 'vue';
+
 // Definér typen for et modul
 interface Module {
   name: string;
@@ -12,7 +13,7 @@ defineProps<{
   modules: Module[]; // Liste af moduler
 }>();
 
-const page = usePage();
+const page = usePage<{ auth: { isLoggedIn: boolean } }>();
 const auth = computed(() => page.props.auth.isLoggedIn);
 
 watch(() => page.props.auth.isLoggedIn, (newValue) => {
@@ -57,6 +58,3 @@ const emit = defineEmits<{
     </div>
   </div>
 </template>
-
-
-

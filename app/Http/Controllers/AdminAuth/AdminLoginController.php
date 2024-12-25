@@ -28,7 +28,7 @@ class AdminLoginController extends Controller
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/admin/dashboard');
+            return redirect('/admin/products');
         }
 
         return back()->withErrors([

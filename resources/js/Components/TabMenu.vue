@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { Variants } from '@/System/Entities';
-import { useCartStore } from '@/Stores/cart';
 
 // Props med modeller
 const props = defineProps<{
@@ -14,11 +13,11 @@ const props = defineProps<{
 }>();
 
 // Hent loginstatus
-const page = usePage();
+const page = usePage<{ auth: { isLoggedIn: boolean } }>();
 const auth = computed(() => page.props.auth.isLoggedIn);
 
 // Aktiv tab
-const activeTab = ref('Board');
+const activeTab = ref<'Board'|'Truck'|'Wheels'>('Board');
 
 // Find den aktive model baseret på aktiv tab
 const activeModelUri = computed(() => {
@@ -41,7 +40,7 @@ const emit = defineEmits<{
   (event: 'onSelect', moduleName: string, modelUri: string): void;
   (event: 'onTabChange', tabName: string): void;
 }>();
-
+ 
 // Skift tab
 const switchTab = (tab: string) => {
   activeTab.value = tab;
