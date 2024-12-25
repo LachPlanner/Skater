@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { Variants } from '@/System/Entities';
-import { useCartStore } from '@/Stores/cart';
 
 // Props med modeller
 const props = defineProps<{
