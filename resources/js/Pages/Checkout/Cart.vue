@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { CartItem, CartProps } from '@/System/Entities';
-import { removeFromCart } from '@/Api/cart';
+import { removeFromCart } from '@/Api/Cart';
 import LinkButton from '@/Components/LinkButton.vue';
 import { useToast } from 'vue-toastification';
 
