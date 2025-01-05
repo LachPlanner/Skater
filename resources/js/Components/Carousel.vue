@@ -34,7 +34,7 @@ onMounted(() => {
     ></div>
 
     <Link
-      href="/build"
+      href="/buildboard"
       class="absolute bottom-6 left-6 bg-white text-black py-2 px-4 rounded-md shadow-lg hover:bg-gray-200"
     >
       Go Build Your Own Board

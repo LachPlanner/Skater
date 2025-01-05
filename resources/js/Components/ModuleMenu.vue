@@ -50,7 +50,7 @@ const emit = defineEmits<{
     <!-- Faste knapper nederst -->
     <div class="flex justify-center items-center p-4 bg-white">
       <Link
-        href="/build"
+        href="/buildboard"
         class="px-4 py-2 bg-black text-white rounded-md hover:bg-white hover:text-black transition border"
       >
         Go build your Board

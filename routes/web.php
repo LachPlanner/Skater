@@ -85,7 +85,7 @@ Route::get('/wheels', function() {
     ]);
 });
 
-Route::get('/build', function() {
+Route::get('/buildboard', function() {
     $models = Models::with('variants')->whereIn('id', [1, 3, 5])->get();
     return Inertia::render('Showroom/BuildBoard', [
         'models' => $models,

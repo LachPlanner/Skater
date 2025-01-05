@@ -1,66 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Velkommen til mit eksamensprojekt SkateCraft
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Opsætning
 
-## About Laravel
+Windows:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Hvis du vil teste register funktionen, skal du opsætte din .env med mailtrap.io
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Ellers benyt dig af test brugerne 
+Username: user1@example.com
+Password: password
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Til admin login - skriv "/admin/login" i url
+Username: admin1@example.com   
+Password: password
 
-## Learning Laravel
+1. Sørg for at du har php, node, npm, mysql server, laravel, composer, xampp (til at køre localhost server) installeret på din computer
+2. Flyt github repositoriet ind i htdocs i xampp
+3. Opret MySQL database
+4. Opdater .env filen med dine database konfirgurationer
+5. Kør command "composer update"
+5. Kør command "composer install"
+6. Kør command "npm ci"
+7. Kør command "php artisan key:generate"
+8. Kør command "php artisan migrate --seed"
+9. Flyt 3D filer som er tilknyttet ind i /storage/app/public/models
+10. Kør command "php artisan storage:link"
+10. Kør command "npm run build"
+12. Kør command "php artisan serve"
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Mac:
+Sørg for at du har php, node, npm, mysql server, laravel, composer installeret på din computer.
+På mac kan man bruge værktøjet "Herd" - der bliver opsat en herd mappe i din user fil, og i denne herd fil kan opsættes flere projekter i forskellige mapper
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Herd står for at køre din localhost server
+Guide til at opsætte herd - https://www.youtube.com/watch?v=w-cebRYZH9E
 
-## Laravel Sponsors
+Når projektet er i Herd mappen, går du igennem terminal ind i projekt mappen og skriver "npm run dev"
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Hvis du vil teste register funktionen, skal du opsætte din .env med mailtrap.io - Opdater mail variabler i bunden af .env filen
 
-### Premium Partners
+Ellers benyt dig af test brugerne 
+Username: user1@example.com
+Password: password
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Til admin login - skriv "/admin/login" i url
+Username: admin1@example.com   
+Password: password
 
-## Contributing
+1. Kør command "npm ci"
+2. Kør command "composer install"
+3. Opsæt Mysql database på din computer
+4. Opdater .env filen til at benytte sig at dit database konfirguration
+5. Opdater APP_URL i .env fil til hvad mappen hedder i herd mappen f.eks. https://skater.test
+6. Åben herd og ændre i konfirgurationer (billede af en hængelås) og tryk på den for at benytte https på det projekt
+5. Kør command "php artisan key:generate"
+4. Kør command "php artisan migrate --seed"
+9. Flyt 3D filer som er tilknyttet ind i /storage/app/public/models
+1. Kør command "npm run dev"
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

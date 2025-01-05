@@ -60,7 +60,7 @@ defineProps({
         <LinkButton href="/board">Board</LinkButton>
         <LinkButton href="/trucks">Trucks</LinkButton>
         <LinkButton href="/wheels">Wheels</LinkButton>
-        <LinkButton href="/build">Build your own board</LinkButton>
+        <LinkButton href="/buildboard">Build your own board</LinkButton>
       </div>
 
       <!-- Brugermenu -->
@@ -85,7 +85,7 @@ defineProps({
       <LinkButton href="/board">Board</LinkButton>
       <LinkButton href="/trucks">Trunks</LinkButton>
       <LinkButton href="/wheels">Wheels</LinkButton>
-      <LinkButton href="/build">Build your own board</LinkButton>
+      <LinkButton href="/buildboard">Build your own board</LinkButton>
       <LinkButton v-if="!auth" href="/register">Register</LinkButton>
       <LinkButton v-if="!auth" href="/login">Login</LinkButton>
       <LinkButton v-if="auth" href="/cart">Cart</LinkButton>
