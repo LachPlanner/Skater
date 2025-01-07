@@ -69,7 +69,7 @@ const toggleOrderDetails = (orderId: number) => {
 
       <!-- Ingen ordrer -->
       <div v-else class="text-center">
-        <p class="text-gray-600">You have no orders.</p>
+        <p class="text-gray-600 mb-10">You have no orders.</p>
         <a href="/shop" class="mt-6 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500">
           Go to Shop
         </a>

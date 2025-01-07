@@ -34,87 +34,87 @@ class ModelsWithVariantsSeeder extends Seeder
             [
                 'variant_name' => 'Board1',
                 'variant_index' => 0,
-                'image_path' => asset('images/boards/Board1.png'),
+                'image_path' => asset('images/boards/board1.png'),
             ],
             [
                 'variant_name' => 'Board2',
                 'variant_index' => 1,
-                'image_path' => asset('images/boards/Board2.png'),
+                'image_path' => asset('images/boards/board2.png'),
             ],
             [
                 'variant_name' => 'Board3',
                 'variant_index' => 2,
-                'image_path' => asset('images/boards/Board3.png'),
+                'image_path' => asset('images/boards/board3.png'),
             ],
             [
                 'variant_name' => 'Board4',
                 'variant_index' => 3,
-                'image_path' => asset('images/boards/Board4.png'),
+                'image_path' => asset('images/boards/board4.png'),
             ],
             [
                 'variant_name' => 'Board5',
                 'variant_index' => 4,
-                'image_path' => asset('images/boards/Board5.png'),
+                'image_path' => asset('images/boards/board5.png'),
     
             ],
             [
                 'variant_name' => 'Board6',
                 'variant_index' => 5,
-                'image_path' => asset('images/boards/Board6.png'),
+                'image_path' => asset('images/boards/board6.png'),
     
             ],
             [
                 'variant_name' => 'Board7',
                 'variant_index' => 6,
-                'image_path' => asset('images/boards/Board7.png'),
+                'image_path' => asset('images/boards/board7.png'),
     
             ],
             [
                 'variant_name' => 'Board8',
                 'variant_index' => 7,
-                'image_path' => asset('images/boards/Board8.png'),
+                'image_path' => asset('images/boards/board8.png'),
     
             ],
             [
                 'variant_name' => 'Board9',
                 'variant_index' => 8,
-                'image_path' => asset('images/boards/Board9.png'),
+                'image_path' => asset('images/boards/board9.png'),
     
             ],
             [
                 'variant_name' => 'Board10',
                 'variant_index' => 9,
-                'image_path' => asset('images/boards/Board10.png'),
+                'image_path' => asset('images/boards/board10.png'),
     
             ],
             [
                 'variant_name' => 'Board11',
                 'variant_index' => 10,
-                'image_path' => asset('images/boards/Board11.png'),
+                'image_path' => asset('images/boards/board11.png'),
     
             ],
             [
                 'variant_name' => 'Board12',
                 'variant_index' => 11,
-                'image_path' => asset('images/boards/Board12.png'),
+                'image_path' => asset('images/boards/board12.png'),
     
             ],
             [
                 'variant_name' => 'Board13',
                 'variant_index' => 12,
-                'image_path' => asset('images/boards/Board13.png'),
+                'image_path' => asset('images/boards/board13.png'),
     
             ],
             [
                 'variant_name' => 'Board14',
                 'variant_index' => 13,
-                'image_path' => asset('images/boards/Board14.png'),
+                'image_path' => asset('images/boards/board14.png'),
     
             ],
             [
                 'variant_name' => 'Board15',
                 'variant_index' => 14,
-                'image_path' => asset('images/boards/Board15.png'),
+                'image_path' => asset('images/boards/board15.png'),
     
             ],
         ]);

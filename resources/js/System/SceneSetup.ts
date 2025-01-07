@@ -62,7 +62,7 @@ export class SceneSetup {
   }
 
   private setupScene3(): void {
-    this.camera.position.set(-1, -0.3, 1);
+    this.camera.position.set(-1.05, -0.27, 1);
     this.camera.lookAt(-1, -0.3, 0.3);
     this.orbitControls.minDistance = 0.5;
     this.orbitControls.maxDistance = 10.0;

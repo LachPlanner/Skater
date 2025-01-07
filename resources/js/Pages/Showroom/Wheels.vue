@@ -62,7 +62,7 @@ onUnmounted(() => {
 
 const changeVariant = (variantName: string) => {
   const object = crafter.engine.getObjectByIdentifier(props.model.uri);
-  crafter.engine.camera.position.set(-1, -0.3, 1);
+  crafter.engine.camera.position.set(-1.05, -0.27, 1);
   crafter.engine.orbitControls.target.set(-1, -0.3, 0.3);
   crafter.engine.camera.lookAt(-1, -0.3, 0.3)
 
