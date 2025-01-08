@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
@@ -30,12 +31,8 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', Password::min(6)],
         ]);
 
-        $user = User::create($userAttributes);
+        User::create($userAttributes);
 
-        Auth::login($user);
-
-        $user->sendEmailVerificationNotification();
-
-        return redirect()->route('verification.notice');
+        return redirect('/login');
     }
 }

@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
   <div 
-    class="relative w-screen h-full max-h-[700px] overflow-hidden bg-gray-800 flex items-center justify-center rounded-lg"
+    class="relative w-full h-full max-h-[700px] overflow-hidden bg-gray-800 flex items-center justify-center"
     style="height: 100vh;">
     <!-- Carousel Images -->
     <div

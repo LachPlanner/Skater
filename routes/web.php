@@ -27,22 +27,6 @@ Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth');
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/email/verify', function() {
-    return Inertia::render('Auth/VerifyEmail');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $request){
-    $request->fulfill();
-
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/resend', function() {
-    request()->user()->SendEmailVerificationNotification();
-
-    return back()->with('status', 'verification-link-sent');
-})->middleware(['auth', 'throttle:6,1']);
-
 //admin login
 Route::get('/admin/login', [AdminLoginController::class, 'create']);
 Route::post('/admin/login', [AdminLoginController::class, 'store']);

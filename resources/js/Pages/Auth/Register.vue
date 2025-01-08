@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 let form = useForm({
     first_name: '',
@@ -10,7 +13,14 @@ let form = useForm({
 })
 
 let submit = () => {
-    form.post('/register');
+  form.post('/register', {
+    onSuccess: () => {
+      toast.success('User created successfully!');
+    },
+    onError: (errors) => {
+      toast.error('Failed to create user.');
+    }
+  });
 }
 </script>
 

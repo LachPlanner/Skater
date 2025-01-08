@@ -74,7 +74,7 @@ const changeVariant = (variantName: string) => {
   
       <!-- Menu -->
       <aside
-        class="absolute top-4 right-4 w-[366px] h-[calc(100%-2rem)] bg-white p-6 border border-gray-300 overflow-y-auto shadow-lg transition-all duration-300"
+        class="absolute top-4 right-4 w-[366px] h-[calc(100%-2rem)] bg-white p-6 border border-gray-300 overflow-y-auto shadow-lg transition-all duration-300 rounded-lg"
         :class="{ 'hidden': isMinimized && windowWidth < 640 }"
       >
         <!-- Minimize Button (kun på mobil) -->

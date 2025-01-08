@@ -38,7 +38,6 @@ class UserSeeder extends Seeder
                     'first_name'        => $userDetails['first_name'],
                     'last_name'         => $userDetails['last_name'],
                     'password'          => $userDetails['password'],
-                    'email_verified_at' => now(),
                 ]
             );
         }
