@@ -4,15 +4,15 @@ use App\Http\Controllers\AdminAuth\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Models;
-use App\Models\Order;
 use App\Models\Variant;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return Inertia::render('Home');
@@ -30,6 +30,26 @@ Route::post('/register', [RegisterController::class, 'store']);
 //admin login
 Route::get('/admin/login', [AdminLoginController::class, 'create']);
 Route::post('/admin/login', [AdminLoginController::class, 'store']);
+
+//Reset password
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('password.request');
+
+Route::post('/generate-token', [PasswordResetController::class, 'generateResetToken']);
+
+Route::get('/reset-password', function () {
+    return Inertia::render('Auth/ResetPassword');
+})->name('password.reset');
+
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
+
+Route::get('/show-token', function (Request $request) {
+    return Inertia::render('Auth/TokenGenerated', [
+        'token' => $request->token,
+        'email' => $request->email,
+    ]);
+})->name('show-token');
 
 Route::middleware('admin')->group(function() {
     Route::get('/admin/dashboard', function() {

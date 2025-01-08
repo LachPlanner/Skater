@@ -46,7 +46,12 @@ let submit = () => {
           </div>
         </form>
 
-        <p class="mt-10 text-center text-sm text-gray-500">
+        <p class="mt-4 text-center text-sm text-gray-500">
+          Forgot Password?
+          <Link href="/forgot-password" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Reset Password</Link>
+        </p>
+
+        <p class="mt-5 text-center text-sm text-gray-500">
           Not a member?
           <Link href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Create Account</Link>
         </p>
