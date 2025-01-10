@@ -1,18 +1,19 @@
 Velkommen til mit eksamensprojekt SkateCraft
 
-Opsætning
+På hjemmesiden Lysskov.dk kan du benytte dig af de opsatte brugere i databasen
 
-Windows:
+User:
 
-Hvis du vil teste register funktionen, skal du opsætte din .env med mailtrap.io
-
-Ellers benyt dig af test brugerne 
 Username: user1@example.com
 Password: password
 
 Til admin login - skriv "/admin/login" i url
 Username: admin1@example.com   
 Password: password
+
+Opsætning til at køre på egen pc - hvis du henter fra github, skal du huske at opsætte filer fra storage i mappen. Du kan finde filerne i mit zippet projekt vedlagt afleveringen
+
+Windows:
 
 1. Sørg for at du har php, node, npm, mysql server, laravel, composer, xampp (til at køre localhost server) installeret på din computer
 2. Flyt github repositoriet ind i htdocs i xampp
@@ -37,8 +38,6 @@ Herd står for at køre din localhost server
 Guide til at opsætte herd - https://www.youtube.com/watch?v=w-cebRYZH9E
 
 Når projektet er i Herd mappen, går du igennem terminal ind i projekt mappen og skriver "npm run dev"
-
-Hvis du vil teste register funktionen, skal du opsætte din .env med mailtrap.io - Opdater mail variabler i bunden af .env filen
 
 Ellers benyt dig af test brugerne 
 Username: user1@example.com
