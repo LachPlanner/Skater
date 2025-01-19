@@ -47,7 +47,7 @@ export class SceneSetup {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(0, 2, 0);
-    this.orbitControls.enableZoom = false;
+    this.orbitControls.enableZoom = true;
   }
 
   private setupScene2(): void {
@@ -58,7 +58,7 @@ export class SceneSetup {
     this.orbitControls.minPolarAngle = 0;
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(-1, -0.1, 0);
-    this.orbitControls.enableZoom = false;
+    this.orbitControls.enableZoom = true;
   }
 
   private setupScene3(): void {
@@ -70,7 +70,7 @@ export class SceneSetup {
     this.orbitControls.maxPolarAngle = Math.PI / 2;
     this.orbitControls.target.set(-1, -0.3, 0.3);
     this.orbitControls.updateAzimuthAngle(45 * (Math.PI / 180));
-    this.orbitControls.enableZoom = false;
+    this.orbitControls.enableZoom = true;
   }
 
   private setupScene4(): void {
