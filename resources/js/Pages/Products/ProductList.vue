@@ -117,7 +117,7 @@ const handleAddToCart = async (productId: number) => {
                   :src="variant.image_path"
                   :alt="variant.variant_name"
                   @click="openPopup(variant)"
-                  class="w-full h-32 object-cover rounded mb-2"
+                  class="w-full h-64 object-contain rounded mb-2"
                 />
                 <h2 class="text-sm font-medium mb-1">{{ variant.variant_name }}</h2>
                 <p class="text-sm text-gray-600 mb-4">
@@ -159,7 +159,7 @@ const handleAddToCart = async (productId: number) => {
                 <img
                     :src="selectedVariant.image_path"
                     :alt="selectedVariant.variant_name"
-                    class="w-full h-40 object-cover rounded mb-4"
+                    class="w-full h-64 object-contain rounded mb-4"
                 />
                 <h2 class="text-xl font-bold">{{ selectedVariant.variant_name }}</h2>
                 <p class="text-gray-600 mb-4">{{ selectedVariant.product.price }} DKK</p>
