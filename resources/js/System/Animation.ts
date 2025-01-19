@@ -32,7 +32,6 @@ export default class Animation {
       console.warn("Mixer not found for model:", model);
       return;
     }
-    console.log(model)
   
     const animations = model.userData.animations as AnimationClip[];
     if (!animations || animations.length === 0) {
