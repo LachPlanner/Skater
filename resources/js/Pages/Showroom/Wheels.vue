@@ -67,20 +67,12 @@ const changeVariant = (variantName: string) => {
   crafter.engine.camera.lookAt(-1, -0.3, 0.3)
 
   if (object) {
-    const mixer = crafter.engine.animation.getMixer(object);
+    const animations = crafter.engine.animation;
 
-    if (mixer) {
-      const animations = object.userData.animations as AnimationClip[];
-      const action = mixer.clipAction(animations[0]);
-
-      action.reset().play();
-      action.clampWhenFinished = true;
-      action.loop = LoopOnce;
-
-      setTimeout(() => {
-        crafter.engine.loader.selectVariant(object, variantName);
-      }, 500);
-    } 
+    // Start animationen og skift varianten efter 500ms
+    animations.playAnimation(object, () => {
+      crafter.engine.loader.selectVariant(object, variantName);
+    });
   } else {
     console.warn('Model not found for variant change:', props.model.uri);
   }

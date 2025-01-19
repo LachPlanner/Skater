@@ -16,14 +16,14 @@ export default class Loader extends GLTFLoader {
                 `/storage/models/${path}.glb`,
                 (gltf) => {
                     const model = gltf.scene;
-                    const animations = gltf.animations; // Få fat i animationerne
+                    const animations = gltf.animations; 
     
                     model.position.set(0, 0, 0);
                     model.scale.set(1, 1, 1);
     
                     model.userData = {
                         identifier: path,
-                        animations, // Gem animationerne her
+                        animations, 
                         loadedAt: new Date().toISOString(),
                     };
     

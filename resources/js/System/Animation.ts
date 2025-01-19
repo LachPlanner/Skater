@@ -1,4 +1,4 @@
-import { AnimationMixer, Object3D } from "three";
+import { AnimationClip, AnimationMixer, Object3D, LoopOnce } from "three";
 
 export default class Animation {
   private mixers: Map<Object3D, AnimationMixer>;
@@ -24,6 +24,34 @@ export default class Animation {
   // Hent en mixer for en specifik model
   public getMixer(model: Object3D): AnimationMixer | undefined {
     return this.mixers.get(model);
+  }
+
+  public playAnimation(model: Object3D, onStart?: () => void): void {
+    const mixer = this.getMixer(model);
+    if (!mixer) {
+      console.warn("Mixer not found for model:", model);
+      return;
+    }
+    console.log(model)
+  
+    const animations = model.userData.animations as AnimationClip[];
+    if (!animations || animations.length === 0) {
+      console.warn("No animations found for model:", model);
+      return;
+    }
+  
+    const clip = animations[0];
+    const action = mixer.clipAction(clip);
+  
+    if (onStart) {
+      setTimeout(() => {
+        onStart();
+      }, 650);
+    }
+  
+    action.reset().play();
+    action.clampWhenFinished = true;
+    action.loop = LoopOnce;
   }
 }
 
